@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogar - Reaction Kingdom</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <h1 class="logo">Reaction Kingdom</h1>
+                <div class="docker-status">
+                    <span class="status-dot active"></span>
+                    <span class="status-text">Docker Running</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">🏠 Menu</a>
+                <a href="instructions.html" class="nav-link">📖 Instruções</a>
+                <a href="play.html" class="nav-link active">🎮 Jogar</a>
+            </nav>
+        </header>
+        
+        <main class="main-content">
+            <div class="play-section">
+                <h2 class="section-title">Selecione o Modo de Jogo</h2>
+                
+                <div class="game-modes">
+                    <div class="mode-card mode-featured">
+                        <div class="mode-header">
+                            <div class="mode-icon">👤</div>
+                            <h3 class="mode-title">Single Player</h3>
+                            <span class="mode-badge">Disponível</span>
+                        </div>
+                        <div class="mode-description">
+                            <p>Jogue sozinho e melhore os seus tempos de reação.</p>
+                            <ul class="mode-features">
+                                <li>✅ 10 rondas por jogo</li>
+                                <li>✅ 2 regras diferentes</li>
+                                <li>✅ Ranking pessoal</li>
+                                <li>✅ Sem necessidade de internet</li>
+                            </ul>
+                        </div>
+                        <div class="mode-actions">
+                            <button class="btn btn-primary btn-block" onclick="startGame('single')">
+                                Iniciar Single Player
+                            </button>
+                            <button class="btn btn-outline btn-block" onclick="showSettings('single')">
+                                Configurações
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <div class="mode-icon">🌐</div>
+                            <h3 class="mode-title">Multiplayer Online</h3>
+                            <span class="mode-badge coming-soon">Em Breve</span>
+                        </div>
+                        <div class="mode-description">
+                            <p>Jogue contra outros jogadores em tempo real.</p>
+                            <ul class="mode-features">
+                                <li>⏳ Partidas rápidas (1 vs 1)</li>
+                                <li>⏳ Ranking global</li>
+                                <li>⏳ Chat em tempo real</li>
+                                <li>⏳ Torneios semanais</li>
+                            </ul>
+                        </div>
+                        <div class="mode-actions">
+                            <button class="btn btn-secondary btn-block" onclick="notifyComingSoon()" disabled>
+                                Online Multiplayer
+                            </button>
+                            <button class="btn btn-outline btn-block" onclick="showInfo('multiplayer')">
+                                Mais Informações
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <div class="mode-icon">🎯</div>
+                            <h3 class="mode-title">Modo Prática</h3>
+                            <span class="mode-badge">Disponível</span>
+                        </div>
+                        <div class="mode-description">
+                            <p>Aprenda as regras sem pressão de tempo.</p>
+                            <ul class="mode-features">
+                                <li>✅ Sem limite de tempo</li>
+                                <li>✅ Escolha a regra</li>
+                                <li>✅ Feedback imediato</li>
+                                <li>✅ Estatísticas detalhadas</li>
+                            </ul>
+                        </div>
+                        <div class="mode-actions">
+                            <button class="btn btn-primary btn-block" onclick="startGame('practice')">
+                                Iniciar Prática
+                            </button>
+                            <button class="btn btn-outline btn-block" onclick="showSettings('practice')">
+                                Personalizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-settings" id="gameSettings" style="display: none;">
+                    <h3>Configurações do Jogo</h3>
+                    <div class="settings-form">
+                        <div class="setting">
+                            <label for="rounds">Número de Rondas:</label>
+                            <select id="rounds">
+                                <option value="5">5 rondas</option>
+                                <option value="10" selected>10 rondas</option>
+                                <option value="15">15 rondas</option>
+                                <option value="20">20 rondas</option>
+                            </select>
+                        </div>
+                        <div class="setting">
+                            <label for="timeLimit">Tempo por Ronda:</label>
+                            <select id="timeLimit">
+                                <option value="3">3 segundos</option>
+                                <option value="5" selected>5 segundos</option>
+                                <option value="7">7 segundos</option>
+                                <option value="10">10 segundos</option>
+                            </select>
+                        </div>
+                        <div class="setting">
+                            <label for="rules">Regras Ativas:</label>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="rule" value="1" checked>
+                                    Regra 1 (Igualdade)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="rule" value="2" checked>
+                                    Regra 2 (Exclusão)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-actions">
+                            <button class="btn btn-primary" onclick="saveSettings()">Salvar</button>
+                            <button class="btn btn-outline" onclick="hideSettings()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation-actions">
+                    <a href="index.html" class="btn btn-outline">
+                        <span class="btn-icon">←</span>
+                        Voltar ao Menu
+                    </a>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Status do Jogo</h3>
+                    <p id="gameStatus">Pronto para jogar</p>
+                    <p>Modo: Single Player</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Reaction Kingdom © 2024 - Container Docker</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

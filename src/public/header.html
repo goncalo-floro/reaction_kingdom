@@ -1,0 +1,33 @@
+<header class="header">
+    <div class="logo-container">
+        <h1 class="logo">Reaction Kingdom</h1>
+        <div class="docker-status">
+            <span class="status-dot active"></span>
+            <span class="status-text">Docker Running</span>
+        </div>
+    </div>
+    <nav class="nav">
+        <a href="index.html" class="nav-link" id="nav-home">Menu</a>
+        <a href="play.html" class="nav-link" id="nav-play">Jogar</a>
+        <a href="instructions.html" class="nav-link" id="nav-instructions">Instruções</a>
+    </nav>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = {
+            'index.html': 'nav-home',
+            'play.html': 'nav-play',
+            'instructions.html': 'nav-instructions'
+        };
+        
+        const activeId = navLinks[currentPage];
+        if (activeId) {
+            const activeLink = document.getElementById(activeId);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+</script>

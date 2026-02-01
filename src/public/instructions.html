@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Kingdom - Instruções</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header carregado automaticamente -->
+        <div id="header"></div>
+        
+        <main class="main-content">
+            <h1 class="section-title">Instruções</h1>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎮</div>
+                    <h2 class="card-title">Como Jogar</h2>
+                </div>
+                <div class="card-content">
+                    <p>Identifica a personagem correta o mais rápido possível. Apenas o tempo total conta!</p>
+                    <p>Cada ronda mede o teu tempo de reação em milissegundos.</p>
+                </div>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h2 class="card-title">Regra 1: Igualdade</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Encontra a personagem que corresponde exatamente à forma e cor mostrada como alvo.</p>
+                        <div style="background: var(--bg-light); padding: var(--spacing-md); border-radius: 8px; margin-top: var(--spacing-sm);">
+                            <p><strong>Exemplo:</strong></p>
+                            <p>Alvo: <strong style="color: var(--accent-color);">Rei Azul</strong></p>
+                            <p>Resposta: <strong>Rei</strong> (tecla A ou ←)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🚫</div>
+                        <h2 class="card-title">Regra 2: Exclusão</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Encontra a personagem cuja forma e cor NÃO aparecem nas imagens mostradas.</p>
+                        <div style="background: var(--bg-light); padding: var(--spacing-md); border-radius: 8px; margin-top: var(--spacing-sm);">
+                            <p><strong>Exemplo:</strong></p>
+                            <p>Imagens: Rei (Original) + Lobo Roxo</p>
+                            <p>Resposta: <strong>Bruxa</strong> (forma e cor não presentes)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <h2 class="card-title">Personagens</h2>
+                </div>
+                <div class="card-content">
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-icon">👑</div>
+                            <div class="character-name">Rei</div>
+                            <div class="character-color">Original: Dourado</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-icon">👸</div>
+                            <div class="character-name">Princesa</div>
+                            <div class="character-color">Original: Rosa</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-icon">👨‍🌾</div>
+                            <div class="character-name">Aldeão</div>
+                            <div class="character-color">Original: Castanho</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-icon">🧙</div>
+                            <div class="character-name">Bruxa</div>
+                            <div class="character-color">Original: Roxo</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-icon">🐺</div>
+                            <div class="character-name">Lobo</div>
+                            <div class="character-color">Original: Cinzento</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="control-card">
+                    <h4>🎮 Jogador 1</h4>
+                    <div class="key-mapping">
+                        <div class="key">A</div>
+                        <div class="key-label">Rei</div>
+                        <div class="key">W</div>
+                        <div class="key-label">Princesa</div>
+                        <div class="key">S</div>
+                        <div class="key-label">Aldeão</div>
+                        <div class="key">D</div>
+                        <div class="key-label">Bruxa</div>
+                        <div class="key">ESPAÇO</div>
+                        <div class="key-label">Lobo</div>
+                    </div>
+                </div>
+                
+                <div class="control-card">
+                    <h4>🎮 Jogador 2</h4>
+                    <div class="key-mapping">
+                        <div class="key">←</div>
+                        <div class="key-label">Rei</div>
+                        <div class="key">↑</div>
+                        <div class="key-label">Princesa</div>
+                        <div class="key">↓</div>
+                        <div class="key-label">Aldeão</div>
+                        <div class="key">→</div>
+                        <div class="key-label">Bruxa</div>
+                        <div class="key">ENTER</div>
+                        <div class="key-label">Lobo</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⏱️</div>
+                    <h2 class="card-title">Sistema de Tempo</h2>
+                </div>
+                <div class="card-content">
+                    <div class="scoring-system">
+                        <div class="scoring-card">
+                            <h4>Tempo de Reação</h4>
+                            <p>Medido em milissegundos desde que a ronda começa até à tua resposta</p>
+                        </div>
+                        <div class="scoring-card">
+                            <h4>Tempo Total</h4>
+                            <p>Soma de todos os tempos de reação das 10 rondas</p>
+                        </div>
+                        <div class="scoring-card">
+                            <h4>Cooldown</h4>
+                            <p>3 segundos de espera após erro</p>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">O tempo continua a contar durante o cooldown</p>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(139, 115, 85, 0.1); border-radius: 8px;">
+                        <p style="color: var(--accent-color); font-weight: bold; margin: 0;">
+                            🎯 Objetivo: Menor tempo total possível!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-actions">
+                <a href="play.html" class="btn btn-primary">
+                    <span class="btn-icon">⚔️</span>
+                    Começar a Jogar
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <span class="btn-icon">←</span>
+                    Voltar ao Menu
+                </a>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-card">
+                    <h3>Dicas</h3>
+                    <p>• Precisão primeiro, depois velocidade</p>
+                    <p>• Memoriza as teclas</p>
+                    <p>• Evita erros para não ter cooldowns</p>
+                </div>
+                
+                <div class="footer-card">
+                    <h3>Recorde</h3>
+                    <p>Melhor tempo: --:--:--</p>
+                    <p>Tempo médio: --:--:--</p>
+                </div>
+                
+                <div class="footer-card">
+                    <h3>Desenvolvimento</h3>
+                    <p>Docker + Nginx</p>
+                    <p>localhost:5500</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Reaction Kingdom - Cada milissegundo conta</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Carregar header automaticamente -->
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar header:', error));
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Kingdom - Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header carregado automaticamente -->
+        <div id="header"></div>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Reaction Kingdom</h1>
+                <p class="page-subtitle">O reino onde apenas os mais rápidos sobrevivem. Testa os teus reflexos e raciocínio em tempo recorde!</p>
+            </div>
+            
+            <!-- Card de Introdução -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🏰</div>
+                    <h2 class="card-title">Bem-vindo ao Reino!</h2>
+                </div>
+                <div class="card-content">
+                    <p>Num mundo medieval de reflexos rápidos e lógica afiada, Reaction Kingdom desafia-te a identificar personagens com base em regras específicas.</p>
+                    <p>Cada ronda mede o teu tempo de reação em milissegundos. O objetivo é simples: conseguir o menor tempo total possível!</p>
+                    <p>Prepara-te para uma experiência intensa onde cada milissegundo conta e os erros têm consequências.</p>
+                </div>
+                <div class="card-actions">
+                    <div class="menu-actions">
+                        <a href="play.html" class="btn btn-primary">
+                            <span class="btn-icon">⚔️</span>
+                            <span>Começar a Jogar</span>
+                        </a>
+                        <a href="instructions.html" class="btn btn-secondary">
+                            <span class="btn-icon">📚</span>
+                            <span>Ver Instruções</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid de Características -->
+            <div class="grid grid-3 mt-xl">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">⏱️</div>
+                        <h3 class="card-title">Tempo é Tudo</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Cada ronda mede o teu tempo de reação. O tempo total das 10 rondas determina o teu desempenho.</p>
+                        <p>Objetivo: menor tempo total possível!</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">⚠️</div>
+                        <h3 class="card-title">Cooldown de 3s</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Se errares, terás de esperar 3 segundos antes de poder responder novamente.</p>
+                        <p>Isto adiciona tempo precioso ao teu total, por isso cuidado com os erros!</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">2 Regras</h3>
+                    </div>
+                    <div class="card-content">
+                        <ul class="card-features">
+                            <li><strong>Igualdade:</strong> Encontra a correspondência exata</li>
+                            <li><strong>Exclusão:</strong> Identifica o personagem ausente</li>
+                        </ul>
+                        <p>Cada regra testa diferentes habilidades de raciocínio.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid de Estatísticas -->
+            <div class="grid grid-3 mt-xl">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3 class="card-title">Personagens</h3>
+                    </div>
+                    <div class="card-content">
+                        <div style="font-size: 3rem; color: var(--color-accent); margin: var(--space-md) 0;">5</div>
+                        <p>Personagens únicos com cores distintas</p>
+                    </div>
+                </div>
+                
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3 class="card-title">Rondas</h3>
+                    </div>
+                    <div class="card-content">
+                        <div style="font-size: 3rem; color: var(--color-accent); margin: var(--space-md) 0;">10</div>
+                        <p>Rondas por partida de Single Player</p>
+                    </div>
+                </div>
+                
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3 class="card-title">Combinações</h3>
+                    </div>
+                    <div class="card-content">
+                        <div style="font-size: 3rem; color: var(--color-accent); margin: var(--space-md) 0;">25</div>
+                        <p>Combinações possíveis de personagem/cor</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Reaction Kingdom</h3>
+                    <p>Um jogo de destreza mental e reflexos rápidos no mundo medieval.</p>
+                    <p>Versão 1.0 - Docker</p>
+                    <p>localhost:5500</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Sistema</h3>
+                    <p>Apenas tempo total conta</p>
+                    <p>Cooldown: 3s após erro</p>
+                    <p>Menor tempo = Melhor</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Modos</h3>
+                    <p>• Single Player</p>
+                    <p>• Modo Prática</p>
+                    <p>• Online (em breve)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Reaction Kingdom - Tudo se resume ao tempo</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Carregar header automaticamente -->
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar header:', error));
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>

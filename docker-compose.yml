@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: reaction_kingdom_web
+    ports:
+      - "5500:80"
+      - "5501:443"  # Para HTTPS futuro
+    volumes:
+      - ./src/public:/usr/share/nginx/html
+      - ./src/public/assets:/usr/share/nginx/html/assets
+    environment:
+      - NODE_ENV=development
+    networks:
+      - reaction_network
+    restart: unless-stopped
+
+  # Para desenvolvimento futuro (Node.js + Socket.IO)
+  # game-server:
+  #   build: ./server
+  #   container_name: reaction_kingdom_server
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - ./server:/app
+  #   networks:
+  #     - reaction_network
+
+networks:
+  reaction_network:
+    driver: bridge

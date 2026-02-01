@@ -1,0 +1,22 @@
+{
+  "name": "reaction-kingdom",
+  "version": "1.0.0",
+  "description": "Reaction Kingdom Game - Professional Web Architecture",
+  "main": "index.js",
+  "scripts": {
+    "dev": "docker-compose up --build",
+    "dev:detached": "docker-compose up -d --build",
+    "stop": "docker-compose down",
+    "logs": "docker-compose logs -f",
+    "clean": "docker-compose down -v",
+    "build": "docker-compose build",
+    "restart": "docker-compose restart",
+    "status": "docker-compose ps",
+    "shell": "docker-compose exec web sh"
+  },
+  "keywords": ["game", "reaction", "multiplayer", "socket.io"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
