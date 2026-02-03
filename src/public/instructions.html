@@ -12,181 +12,134 @@
         <div id="header"></div>
         
         <main class="main-content">
-            <h1 class="section-title">Instruções</h1>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🎮</div>
-                    <h2 class="card-title">Como Jogar</h2>
-                </div>
-                <div class="card-content">
-                    <p>Identifica a personagem correta o mais rápido possível. Apenas o tempo total conta!</p>
-                    <p>Cada ronda mede o teu tempo de reação em milissegundos.</p>
-                </div>
-            </div>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">🎯</div>
-                        <h2 class="card-title">Regra 1: Igualdade</h2>
+            <div class="play-section">
+                <h2 class="section-title">Instruções</h2>
+                
+                <!-- 3 CAIXAS DE INSTRUÇÕES -->
+                <div class="game-modes">
+                    <!-- CAIXA 1: REGRA 1 - IGUALDADE -->
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <h3 class="mode-title">Regra 1: Igualdade</h3>
+                        </div>
+                        <div class="mode-description">
+                            <p><strong>Esta regra sobrepõe-se à Regra 2.</strong></p>
+                            <p>Aparecem duas personagens.</p>
+                            <p>Uma delas tem a cor original.</p>
+                            
+                            <!-- IMAGEM DA REGRA 1 -->
+                            <div style="text-align: center; margin: var(--space-md) 0;">
+                                <img src="\assets\backgrounds\regra_igualdade.png" 
+                                     alt="Exemplo da Regra 1: Igualdade" 
+                                     style="max-width: 100%; border-radius: 8px; border: 3px solid var(--border-color);">
+                            </div>
+                            
+                            <div style="background: var(--color-bg-main); padding: var(--space-md); border-radius: 8px; margin: var(--space-md) 0;">
+                                <h4 style="color: var(--color-accent); margin-bottom: var(--space-sm);">Exemplo:</h4>
+                                <p>Neste caso temos um rei castanho e uma princesa azul</p><br>
+                                
+                                <div style="text-align: center; margin-top: var(--space-md); padding: var(--space-sm); background: rgba(76, 175, 80, 0.1); border-radius: 6px;">
+                                    <p style="color: var(--color-text-dark); margin: 0;">
+                                        <strong>Resposta correta:</strong>
+                                        <span style="color: #4CAF50; font-weight: bold;">Princesa</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <ul class="mode-features">
+                                <li>Aparecem sempre só 2 personagens</li>
+                                <li>A resposta tem a cor original</li>
+                                <li>Existe sempre só uma resposta correta</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <p>Encontra a personagem que corresponde exatamente à forma e cor mostrada como alvo.</p>
-                        <div style="background: var(--bg-light); padding: var(--spacing-md); border-radius: 8px; margin-top: var(--spacing-sm);">
-                            <p><strong>Exemplo:</strong></p>
-                            <p>Alvo: <strong style="color: var(--accent-color);">Rei Azul</strong></p>
-                            <p>Resposta: <strong>Rei</strong> (tecla A ou ←)</p>
+                    
+                    <!-- CAIXA 2: REGRA 2 - EXCLUSÃO -->
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <h3 class="mode-title">Regra 2: Exclusão</h3>
+                        </div>
+                        <div class="mode-description">
+                            <p><strong>Encontra a personagem cuja forma e cor não aparecem.</strong></p>
+                            <p>Duas personagens aparecem.</p>
+                            <p>Nenhuma tem a cor original da sua personagem.</p>
+                            
+                            <!-- IMAGEM DA REGRA 2 -->
+                            <div style="text-align: center; margin: var(--space-md) 0;">
+                                <img src="assets/backgrounds/regra_exclusao.png" 
+                                     alt="Exemplo da Regra 2: Exclusão" 
+                                     style="max-width: 100%; border-radius: 8px; border: 3px solid var(--border-color);">
+                            </div>
+                            
+                            <div style="background: var(--color-bg-main); padding: var(--space-md); border-radius: 8px; margin: var(--space-md) 0;">
+                                <h4 style="color: var(--color-accent); margin-bottom: var(--space-sm);">Exemplo:</h4>
+                                <p>Neste caso temos um rei castanho e uma bruxa azul</p> <br>
+                                
+                                <div style="text-align: center; margin-top: var(--space-md); padding: var(--space-sm); background: rgba(76, 175, 80, 0.1); border-radius: 6px;">
+                                    <p style="color: var(--color-text-dark); margin: 0;">
+                                        <strong>Resposta correta:</strong> 
+                                        <span style="color: #4CAF50; font-weight: bold;">Lobo</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <ul class="mode-features">
+                                <li>Sempre aparecem 2 personagens</li>
+                                <li>Resposta não está nas imagens(nem forma nem cor estão presentes)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- CAIXA 3: SISTEMA DE TEMPO E RONDAS -->
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <h3 class="mode-title">Sistema de Jogo</h3>
+                        </div>
+                        <div class="mode-description">
+                            <p><strong>Apenas o tempo total conta.</strong></p><br>
+                            <p>Cada ronda mede o teu tempo de reação em milissegundos.</p><br>
+                            <p>Erros adicionam um cooldown de 3 segundos, aonde não poderás responder</p><br>
+                            
+                            <div style="text-align: center; margin-top: var(--space-md); padding: var(--space-md); background: rgba(210, 105, 30, 0.1); border-radius: 8px;">
+                                <p style="color: var(--color-accent); font-weight: bold; margin: 0; font-size: 1.1rem;">
+                                    Objetivo: Menor tempo total possível!
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">🚫</div>
-                        <h2 class="card-title">Regra 2: Exclusão</h2>
-                    </div>
-                    <div class="card-content">
-                        <p>Encontra a personagem cuja forma e cor NÃO aparecem nas imagens mostradas.</p>
-                        <div style="background: var(--bg-light); padding: var(--spacing-md); border-radius: 8px; margin-top: var(--spacing-sm);">
-                            <p><strong>Exemplo:</strong></p>
-                            <p>Imagens: Rei (Original) + Lobo Roxo</p>
-                            <p>Resposta: <strong>Bruxa</strong> (forma e cor não presentes)</p>
-                        </div>
-                    </div>
+                <!-- BOTÕES DE NAVEGAÇÃO -->
+                <div class="navigation-actions">
+                    <a href="play.html" class="btn btn-primary">
+                        Começar a Jogar
+                    </a>
+                    <a href="index.html" class="btn btn-outline">
+                        Voltar ao Menu
+                    </a>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">👥</div>
-                    <h2 class="card-title">Personagens</h2>
-                </div>
-                <div class="card-content">
-                    <div class="character-grid">
-                        <div class="character-card">
-                            <div class="character-icon">👑</div>
-                            <div class="character-name">Rei</div>
-                            <div class="character-color">Original: Dourado</div>
-                        </div>
-                        <div class="character-card">
-                            <div class="character-icon">👸</div>
-                            <div class="character-name">Princesa</div>
-                            <div class="character-color">Original: Rosa</div>
-                        </div>
-                        <div class="character-card">
-                            <div class="character-icon">👨‍🌾</div>
-                            <div class="character-name">Aldeão</div>
-                            <div class="character-color">Original: Castanho</div>
-                        </div>
-                        <div class="character-card">
-                            <div class="character-icon">🧙</div>
-                            <div class="character-name">Bruxa</div>
-                            <div class="character-color">Original: Roxo</div>
-                        </div>
-                        <div class="character-card">
-                            <div class="character-icon">🐺</div>
-                            <div class="character-name">Lobo</div>
-                            <div class="character-color">Original: Cinzento</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="cards-grid">
-                <div class="control-card">
-                    <h4>🎮 Jogador 1</h4>
-                    <div class="key-mapping">
-                        <div class="key">A</div>
-                        <div class="key-label">Rei</div>
-                        <div class="key">W</div>
-                        <div class="key-label">Princesa</div>
-                        <div class="key">S</div>
-                        <div class="key-label">Aldeão</div>
-                        <div class="key">D</div>
-                        <div class="key-label">Bruxa</div>
-                        <div class="key">ESPAÇO</div>
-                        <div class="key-label">Lobo</div>
-                    </div>
-                </div>
-                
-                <div class="control-card">
-                    <h4>🎮 Jogador 2</h4>
-                    <div class="key-mapping">
-                        <div class="key">←</div>
-                        <div class="key-label">Rei</div>
-                        <div class="key">↑</div>
-                        <div class="key-label">Princesa</div>
-                        <div class="key">↓</div>
-                        <div class="key-label">Aldeão</div>
-                        <div class="key">→</div>
-                        <div class="key-label">Bruxa</div>
-                        <div class="key">ENTER</div>
-                        <div class="key-label">Lobo</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">⏱️</div>
-                    <h2 class="card-title">Sistema de Tempo</h2>
-                </div>
-                <div class="card-content">
-                    <div class="scoring-system">
-                        <div class="scoring-card">
-                            <h4>Tempo de Reação</h4>
-                            <p>Medido em milissegundos desde que a ronda começa até à tua resposta</p>
-                        </div>
-                        <div class="scoring-card">
-                            <h4>Tempo Total</h4>
-                            <p>Soma de todos os tempos de reação das 10 rondas</p>
-                        </div>
-                        <div class="scoring-card">
-                            <h4>Cooldown</h4>
-                            <p>3 segundos de espera após erro</p>
-                            <p style="font-size: 0.9rem; color: var(--text-light);">O tempo continua a contar durante o cooldown</p>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(139, 115, 85, 0.1); border-radius: 8px;">
-                        <p style="color: var(--accent-color); font-weight: bold; margin: 0;">
-                            🎯 Objetivo: Menor tempo total possível!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="menu-actions">
-                <a href="play.html" class="btn btn-primary">
-                    <span class="btn-icon">⚔️</span>
-                    Começar a Jogar
-                </a>
-                <a href="index.html" class="btn btn-secondary">
-                    <span class="btn-icon">←</span>
-                    Voltar ao Menu
-                </a>
             </div>
         </main>
         
         <footer class="footer">
-            <div class="footer-grid">
-                <div class="footer-card">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Reaction Kingdom</h3>
+                    <p>Testa os teus reflexos!</p>
+                    <p>Versão 1.0 - Docker</p>
+                </div>
+                
+                <div class="footer-section">
                     <h3>Dicas</h3>
-                    <p>• Precisão primeiro, depois velocidade</p>
                     <p>• Memoriza as teclas</p>
-                    <p>• Evita erros para não ter cooldowns</p>
+                    <p>• Foca na precisão</p>
+                    <p>• Evita erros</p>
                 </div>
                 
-                <div class="footer-card">
-                    <h3>Recorde</h3>
-                    <p>Melhor tempo: --:--:--</p>
-                    <p>Tempo médio: --:--:--</p>
-                </div>
-                
-                <div class="footer-card">
-                    <h3>Desenvolvimento</h3>
-                    <p>Docker + Nginx</p>
-                    <p>localhost:5500</p>
+                <div class="footer-section">
+                    <h3>Status</h3>
+                    <p>Docker: Rodando</p>
+                    <p>Porta: 5500</p>
                 </div>
             </div>
             <div class="footer-bottom">

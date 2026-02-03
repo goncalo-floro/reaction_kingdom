@@ -8,12 +8,13 @@
     </div>
     <nav class="nav">
         <a href="index.html" class="nav-link" id="nav-home">Menu</a>
-        <a href="play.html" class="nav-link" id="nav-play">Jogar</a>
         <a href="instructions.html" class="nav-link" id="nav-instructions">Instruções</a>
+        <a href="play.html" class="nav-link" id="nav-play">Jogar</a>
     </nav>
 </header>
 
 <script>
+    // Ativar link atual automaticamente
     document.addEventListener('DOMContentLoaded', function() {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         const navLinks = {

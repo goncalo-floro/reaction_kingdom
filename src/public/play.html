@@ -3,44 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogar - Reaction Kingdom</title>
+    <title>Reaction Kingdom - Jogar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <h1 class="logo">Reaction Kingdom</h1>
-                <div class="docker-status">
-                    <span class="status-dot active"></span>
-                    <span class="status-text">Docker Running</span>
-                </div>
-            </div>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">🏠 Menu</a>
-                <a href="instructions.html" class="nav-link">📖 Instruções</a>
-                <a href="play.html" class="nav-link active">🎮 Jogar</a>
-            </nav>
-        </header>
+        <!-- Header carregado automaticamente -->
+        <div id="header"></div>
         
         <main class="main-content">
             <div class="play-section">
-                <h2 class="section-title">Selecione o Modo de Jogo</h2>
+                <h2 class="section-title">Selecionar Modo de Jogo</h2>
                 
                 <div class="game-modes">
-                    <div class="mode-card mode-featured">
+                    <!-- SINGLE PLAYER -->
+                    <div class="mode-card">
                         <div class="mode-header">
-                            <div class="mode-icon">👤</div>
                             <h3 class="mode-title">Single Player</h3>
                             <span class="mode-badge">Disponível</span>
                         </div>
                         <div class="mode-description">
                             <p>Jogue sozinho e melhore os seus tempos de reação.</p>
                             <ul class="mode-features">
-                                <li>✅ 10 rondas por jogo</li>
-                                <li>✅ 2 regras diferentes</li>
-                                <li>✅ Ranking pessoal</li>
-                                <li>✅ Sem necessidade de internet</li>
+                                <li>10 rondas por jogo</li>
+                                <li>2 regras diferentes</li>
+                                <li>Ranking pessoal</li>
+                                <li>Sem necessidade de internet</li>
                             </ul>
                         </div>
                         <div class="mode-actions">
@@ -53,19 +41,19 @@
                         </div>
                     </div>
                     
+                    <!-- MULTIPLAYER -->
                     <div class="mode-card">
                         <div class="mode-header">
-                            <div class="mode-icon">🌐</div>
                             <h3 class="mode-title">Multiplayer Online</h3>
                             <span class="mode-badge coming-soon">Em Breve</span>
                         </div>
                         <div class="mode-description">
                             <p>Jogue contra outros jogadores em tempo real.</p>
                             <ul class="mode-features">
-                                <li>⏳ Partidas rápidas (1 vs 1)</li>
-                                <li>⏳ Ranking global</li>
-                                <li>⏳ Chat em tempo real</li>
-                                <li>⏳ Torneios semanais</li>
+                                <li>Partidas rápidas (1 vs 1)</li>
+                                <li>Ranking global</li>
+                                <li>Chat em tempo real</li>
+                                <li>Torneios semanais</li>
                             </ul>
                         </div>
                         <div class="mode-actions">
@@ -78,19 +66,19 @@
                         </div>
                     </div>
                     
+                    <!-- PRÁTICA -->
                     <div class="mode-card">
                         <div class="mode-header">
-                            <div class="mode-icon">🎯</div>
                             <h3 class="mode-title">Modo Prática</h3>
                             <span class="mode-badge">Disponível</span>
                         </div>
                         <div class="mode-description">
                             <p>Aprenda as regras sem pressão de tempo.</p>
                             <ul class="mode-features">
-                                <li>✅ Sem limite de tempo</li>
-                                <li>✅ Escolha a regra</li>
-                                <li>✅ Feedback imediato</li>
-                                <li>✅ Estatísticas detalhadas</li>
+                                <li>Sem limite de tempo</li>
+                                <li>Escolha a regra</li>
+                                <li>Feedback imediato</li>
+                                <li>Estatísticas detalhadas</li>
                             </ul>
                         </div>
                         <div class="mode-actions">
@@ -147,7 +135,6 @@
                 
                 <div class="navigation-actions">
                     <a href="index.html" class="btn btn-outline">
-                        <span class="btn-icon">←</span>
                         Voltar ao Menu
                     </a>
                 </div>
@@ -167,6 +154,16 @@
             </div>
         </footer>
     </div>
+    
+    <!-- Carregar header automaticamente -->
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar header:', error));
+    </script>
     
     <script src="app.js"></script>
 </body>
