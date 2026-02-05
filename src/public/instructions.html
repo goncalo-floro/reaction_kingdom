@@ -5,6 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reaction Kingdom - Instruções</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos para a barra de personagens */        
+        .characters-bar h3 {
+            text-align: center;
+            color: var(--color-accent);
+            margin-bottom: var(--space-lg);
+            font-size: 1.5rem;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--space-lg);
+            justify-items: center;
+            align-items: center;
+        }
+
+        .character-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-md);
+            border-radius: 10px;
+            background: var(--color-bg-main);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            max-width: 160px;
+            border: 2px solid var(--border-color);
+        }
+
+        .character-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .character-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: var(--space-md);
+            transition: transform 0.3s ease;
+        }
+
+        .character-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .character-item p {
+            color: var(--color-text-dark);
+            font-weight: 700;
+            margin: 0;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .characters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ajuste para mobile */
+                gap: var(--space-md);
+            }
+            
+            .character-item {
+                max-width: 140px;
+                padding: var(--space-sm);
+            }
+            
+            .character-item img {
+                width: 85px; /* Aumentei de 60px para 85px no mobile */
+                height: 85px; /* Aumentei de 60px para 85px no mobile */
+            }
+            
+            .characters-bar {
+                padding: var(--space-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .character-item img {
+                width: 75px; /* Ajuste para telas muito pequenas */
+                height: 75px;
+            }
+            
+            .character-item {
+                max-width: 120px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,6 +104,39 @@
         <main class="main-content">
             <div class="play-section">
                 <h2 class="section-title">Instruções</h2>
+                
+                <!-- BARRA DE PERSONAGENS COM CORES ORIGINAIS -->
+                <div class="mode-card">
+                    <h3  style="text-align: center;">Personagens e Cores Originais</h3>
+                    <br>
+                    <div class="characters-grid">
+                        <div class="character-item">
+                            <img src="assets/rei/rei.png" alt="Rei">
+                            <p>Rei</p>
+                        </div>
+                        <div class="character-item">
+                            <img src="assets/princesa/princesa.png" alt="Princesa">
+                            <p>Princesa</p>
+                        </div>
+                        <div class="character-item">
+                            <img src="assets/bruxa/bruxa.png" alt="Bruxa">
+                            <p>Bruxa</p>
+                        </div>
+                        <div class="character-item">
+                            <img src="assets/lobo/lobo.png" alt="Lobo">
+                            <p>Lobo</p>
+                        </div>
+                        <div class="character-item">
+                            <img src="assets/aldeao/aldeao.png" alt="Aldeão">
+                            <p>Aldeão</p>
+                        </div>
+                    </div>
+                    <br>
+                    <p style="text-align: center; margin-top: var(--space-md); color: var(--color-text-light); font-size: 0.9rem;">
+                        Memorize as cores originais de cada personagem para responder corretamente
+                    </p>
+                </div>
+                <br>
                 
                 <!-- 3 CAIXAS DE INSTRUÇÕES -->
                 <div class="game-modes">
