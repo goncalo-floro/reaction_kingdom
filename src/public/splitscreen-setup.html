@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Kingdom - Split Screen Setup</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Estilo da caixa de configuração */
+        .setup-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 0 auto 30px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .setup-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #00b4d8;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Configuração dos jogadores */
+        .players-setup {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .player-input-group {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .player-input-group label {
+            display: block;
+            font-size: 1.2rem;
+            color: #00b4d8;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .player-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .player-input:focus {
+            outline: none;
+            border-color: #00b4d8;
+            background: rgba(0, 180, 216, 0.1);
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
+        }
+
+        /* Controles - usando o mesmo estilo de play.html */
+        .controls-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .controls-title {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Reutilizando o estilo da caixa de controles de play.html */
+        .controls-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 90px;
+        }
+
+        .control-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-character img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .control-item:hover .control-character img {
+            transform: scale(1.05);
+        }
+
+        .key {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            min-width: 40px;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .control-label {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            font-weight: 600;
+        }
+
+        /* Botões */
+        .setup-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .setup-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            font-weight: bold;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            color: white;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.4);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .players-setup {
+                flex-direction: column;
+            }
+            
+            .player-input-group {
+                min-width: 100%;
+            }
+            
+            .controls-items {
+                gap: 10px;
+            }
+            
+            .control-item {
+                min-width: 80px;
+            }
+            
+            .control-character img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .setup-btn {
+                min-width: 100%;
+            }
+            
+            .setup-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Split Screen Setup</h1>
+            <p>Insira os nomes dos jogadores e prepare-se para a batalha de reação!</p>
+        </div>
+        
+        <div class="setup-card">
+            <div class="setup-title">Configurar Jogadores</div>
+            
+            <div class="players-setup">
+                <div class="player-input-group">
+                    <label for="player1">Jogador 1</label>
+                    <div class="input-wrapper">
+                        <input type="text" 
+                               id="player1" 
+                               class="player-input" 
+                               placeholder="Player 1" 
+                               maxlength="12"
+                               value="Player 1">
+                    </div>
+                    
+                    <div class="controls-preview">
+                        <div class="controls-title">Controles - Jogador 1</div>
+                        <div class="controls-items">
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/rei/rei.png" alt="Rei">
+                                </div>
+                                <div class="key">A</div>
+                                <div class="control-label">Rei</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/princesa/princesa.png" alt="Princesa">
+                                </div>
+                                <div class="key">S</div>
+                                <div class="control-label">Princesa</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/bruxa/bruxa.png" alt="Bruxa">
+                                </div>
+                                <div class="key">D</div>
+                                <div class="control-label">Bruxa</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/lobo/lobo.png" alt="Lobo">
+                                </div>
+                                <div class="key">W</div>
+                                <div class="control-label">Lobo</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/aldeao/aldeao.png" alt="Aldeão">
+                                </div>
+                                <div class="key">ESPAÇO</div>
+                                <div class="control-label">Aldeão</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player-input-group">
+                    <label for="player2">Jogador 2</label>
+                    <div class="input-wrapper">
+                        <input type="text" 
+                               id="player2" 
+                               class="player-input" 
+                               placeholder="Player 2" 
+                               maxlength="12"
+                               value="Player 2">
+                    </div>
+                    
+                    <div class="controls-preview">
+                        <div class="controls-title">Controles - Jogador 2</div>
+                        <div class="controls-items">
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/rei/rei.png" alt="Rei">
+                                </div>
+                                <div class="key">←</div>
+                                <div class="control-label">Rei</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/princesa/princesa.png" alt="Princesa">
+                                </div>
+                                <div class="key">↑</div>
+                                <div class="control-label">Princesa</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/bruxa/bruxa.png" alt="Bruxa">
+                                </div>
+                                <div class="key">→</div>
+                                <div class="control-label">Bruxa</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/lobo/lobo.png" alt="Lobo">
+                                </div>
+                                <div class="key">↓</div>
+                                <div class="control-label">Lobo</div>
+                            </div>
+                            
+                            <div class="control-item">
+                                <div class="control-character">
+                                    <img src="assets/aldeao/aldeao.png" alt="Aldeão">
+                                </div>
+                                <div class="key">ENTER</div>
+                                <div class="control-label">Aldeão</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setup-actions">
+                <button class="setup-btn back-btn" onclick="goBack()">
+                    ← Voltar
+                </button>
+                <button class="setup-btn start-btn" onclick="startGame()">
+                    Iniciar Jogo →
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function goBack() {
+            window.location.href = 'play.html';
+        }
+        
+        function startGame() {
+            const player1Name = document.getElementById('player1').value.trim() || 'Player 1';
+            const player2Name = document.getElementById('player2').value.trim() || 'Player 2';
+            
+            // Armazenar nomes no localStorage para usar na página de jogo
+            localStorage.setItem('player1Name', player1Name);
+            localStorage.setItem('player2Name', player2Name);
+            
+            // Redirecionar para a página do jogo
+            window.location.href = 'splitscreen.html';
+        }
+        
+        // Permitir Enter para iniciar o jogo
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                startGame();
+            } else if (event.key === 'Escape') {
+                goBack();
+            }
+        });
+        
+        // Focar no primeiro input ao carregar
+        window.onload = function() {
+            document.getElementById('player1').focus();
+            document.getElementById('player1').select();
+        };
+    </script>
+</body>
+</html>

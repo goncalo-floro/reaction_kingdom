@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reaction Kingdom - 10 Rodadas</title>
+    <title>Reaction Kingdom - single player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -82,31 +82,11 @@
             margin: 40px 0;
         }
 
-        .instruction {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            border-left: 5px solid #00b4d8;
-        }
-
-        .instruction h2 {
-            color: #00b4d8;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-
-        .instruction p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
         .characters-display {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin: 50px 0;
+            gap: 50px;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
 
@@ -152,8 +132,6 @@
             color: #a0a0a0;
             font-style: italic;
         }
-
-        /* REMOVIDO: .vs-separator - Não será mais usado */
 
         /* Answer Choices */
         .answer-section {
@@ -234,8 +212,8 @@
         }
 
         .answer-character-img {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             object-fit: contain;
             margin-bottom: 10px;
             background: rgba(255, 255, 255, 0.05);
@@ -278,62 +256,6 @@
             width: 10%;
             border-radius: 4px;
             transition: width 0.5s ease;
-        }
-
-        /* Feedback */
-        .feedback-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .feedback-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .feedback-box {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 50px;
-            border-radius: 25px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 2px solid #00b4d8;
-        }
-
-        .feedback-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        .feedback-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .feedback-message {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .cooldown-timer {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ff6b6b;
-            margin: 20px 0;
         }
 
         /* Results Screen */
@@ -447,8 +369,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* REMOVIDO: @keyframes shake e .shake */
-
         /* Responsive */
         @media (max-width: 768px) {
             .game-header {
@@ -522,10 +442,6 @@
         <!-- Game Screen -->
         <div id="game-screen">
             <div class="game-area">
-                <div class="instruction">
-                    <h2><i class="fas fa-question-circle"></i> Qual é a personagem correta?</h2>
-                    <p>Selecione a personagem que deve completar o par segundo as regras</p>
-                </div>
 
                 <div class="characters-display">
                     <div class="character-slot" id="slot1">
@@ -535,8 +451,6 @@
                             <div class="character-color" id="char1-color"></div>
                         </div>
                     </div>
-
-                    <!-- REMOVIDO: Elemento VS -->
 
                     <div class="character-slot" id="slot2">
                         <img class="character-image" id="char2-img" src="" alt="Personagem 2">
@@ -567,9 +481,7 @@
                     <div class="result-label">Tentativas:</div>
                     <div class="result-value" id="total-attempts">0</div>
                 </div>
-                
-                <!-- REMOVIDO: Linha dos Acertos -->
-                
+                                
                 <div class="result-item">
                     <div class="result-label">Tempo Total:</div>
                     <div class="result-value" id="final-time">00:00</div>
@@ -589,16 +501,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Feedback Overlay -->
-    <div class="feedback-overlay" id="feedback-overlay">
-        <div class="feedback-box">
-            <div class="feedback-icon" id="feedback-icon"></div>
-            <div class="feedback-title" id="feedback-title"></div>
-            <div class="feedback-message" id="feedback-message"></div>
-            <div class="cooldown-timer" id="cooldown-timer" style="display: none;"></div>
         </div>
     </div>
 
@@ -906,64 +808,26 @@
             
             if (isCorrect) {
                 correctAnswers++;
-                showFeedback(true);
+                button.classList.add('correct');
+                
+                // Apenas atualiza a UI e vai para próxima rodada
+                updateUI();
                 setTimeout(() => {
-                    document.getElementById('feedback-overlay').classList.remove('active');
                     nextRound();
-                }, 1000);
+                }, 500); // Pequeno delay para ver o botão verde
             } else {
-                showFeedback(false);
+                button.classList.add('incorrect');
                 startCooldown();
             }
             
             updateUI();
         }
         
-        function showFeedback(isCorrect) {
-            const overlay = document.getElementById('feedback-overlay');
-            const icon = document.getElementById('feedback-icon');
-            const title = document.getElementById('feedback-title');
-            const message = document.getElementById('feedback-message');
-            const cooldownTimer = document.getElementById('cooldown-timer');
-            
-            if (isCorrect) {
-                icon.innerHTML = '<i class="fas fa-check-circle"></i>';
-                icon.style.color = '#2ecc71';
-                title.textContent = '🎉 Correto!';
-                message.innerHTML = `+1 ponto!`;
-                cooldownTimer.style.display = 'none';
-            } else {
-                icon.innerHTML = '<i class="fas fa-times-circle"></i>';
-                icon.style.color = '#e74c3c';
-                title.textContent = '❌ Incorreto';
-                message.innerHTML = `Cooldown de 3 segundos`;
-                cooldownTimer.style.display = 'block';
-                cooldownTimer.textContent = '3';
-                
-                // NÃO mostrar a resposta correta - deixar que o jogador descubra sozinho
-                // Apenas marcar a resposta errada como incorreta
-                const buttons = document.querySelectorAll('.answer-btn');
-                buttons.forEach(btn => {
-                    const btnText = btn.querySelector('.answer-text').textContent;
-                    const personagemNome = Object.keys(personagens).find(
-                        key => personagens[key].nomeExibicao === btnText
-                    );
-                    
-                    if (personagemNome === selectedAnswer) {
-                        btn.classList.add('incorrect');
-                        // REMOVIDO: .shake - não haverá animação
-                    }
-                    // REMOVIDO: Não marcar a resposta correta
-                });
-            }
-            
-            overlay.classList.add('active');
-        }
-        
         function startCooldown() {
             cooldownActive = true;
             cooldownTimer = 3;
             
+            // Adiciona overlay de cooldown em cada botão
             document.querySelectorAll('.answer-btn').forEach(btn => {
                 btn.classList.add('disabled');
                 
@@ -973,12 +837,11 @@
                 btn.appendChild(overlay);
             });
             
-            const cooldownElement = document.getElementById('cooldown-timer');
-            
+            // Inicia contagem regressiva
             cooldownInterval = setInterval(() => {
                 cooldownTimer--;
-                cooldownElement.textContent = cooldownTimer;
                 
+                // Atualiza o número em cada overlay
                 document.querySelectorAll('.cooldown-overlay').forEach(overlay => {
                     overlay.textContent = cooldownTimer;
                 });
@@ -986,12 +849,10 @@
                 if (cooldownTimer <= 0) {
                     clearInterval(cooldownInterval);
                     
-                    document.getElementById('feedback-overlay').classList.remove('active');
-                    
                     cooldownActive = false;
                     selectedAnswer = null;
                     
-                    // Limpar classes incorretas para nova tentativa
+                    // Remove overlays e limpa classes
                     document.querySelectorAll('.answer-btn').forEach(btn => {
                         btn.classList.remove('disabled', 'incorrect', 'selected');
                         const overlay = btn.querySelector('.cooldown-overlay');

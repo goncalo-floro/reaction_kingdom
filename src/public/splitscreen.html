@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Kingdom - Split Screen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Centralizado */
+        .game-header {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            flex-shrink: 0;
+        }
+
+        .game-title h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        /* Split Screen Layout */
+        .split-screen {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .player-section {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .player-section.active {
+            border-color: #00b4d8;
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
+        }
+
+        .player-section.player1.active {
+            border-color: #00b4d8;
+        }
+
+        .player-section.player2.active {
+            border-color: #ff6b6b;
+        }
+
+        .player-section.finished {
+            border-color: #2ecc71;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .player-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .player-name.player1 {
+            color: #00b4d8;
+        }
+
+        .player-name.player2 {
+            color: #ff6b6b;
+        }
+
+        .player-stats {
+            display: flex;
+            gap: 8px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .player1 .stat-value {
+            color: #00b4d8;
+        }
+
+        .player2 .stat-value {
+            color: #ff6b6b;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #a0a0a0;
+            margin-top: 2px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            margin: 8px 0;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .player1 .progress-bar {
+            background: linear-gradient(90deg, #00b4d8, #0077b6);
+        }
+
+        .player2 .progress-bar {
+            background: linear-gradient(90deg, #ff6b6b, #ff4757);
+        }
+
+        /* Game Area */
+        .game-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .instruction {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+            flex-shrink: 0;
+        }
+
+        .player1 .instruction {
+            border-left-color: #00b4d8;
+        }
+
+        .player2 .instruction {
+            border-left-color: #ff6b6b;
+        }
+
+        .instruction h2 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .player1 .instruction h2 {
+            color: #00b4d8;
+        }
+
+        .player2 .instruction h2 {
+            color: #ff6b6b;
+        }
+
+        /* Characters Display com imagens maiores */
+        .characters-display {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            flex-shrink: 0;
+        }
+
+        .character-slot {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+            width: 400px; /* Aumentado */
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .character-image {
+            width: 200px; /* Aumentado */
+            height: 200px; /* Aumentado */
+            object-fit: contain;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .character-info {
+            margin-top: 5px;
+        }
+
+        .character-name {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .player1 .character-name {
+            color: #00b4d8;
+        }
+
+        .player2 .character-name {
+            color: #ff6b6b;
+        }
+
+        .character-color {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        /* Answer Choices */
+        .answer-section {
+            margin-top: 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        /* Linha divisória */
+        .answer-divider {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
+            border-radius: 1px;
+            flex-shrink: 0;
+        }
+
+        .answer-choices {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            overflow-y: auto;
+            padding: 2px;
+            flex: 1;
+            align-content: flex-start;
+        }
+
+        .answer-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 6px;
+            font-size: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 140px; /* Aumentado */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .answer-btn:hover:not(.disabled) {
+            transform: scale(1.03);
+        }
+
+        .player1 .answer-btn:hover:not(.disabled) {
+            background: rgba(0, 180, 216, 0.2);
+            border-color: #00b4d8;
+        }
+
+        .player2 .answer-btn:hover:not(.disabled) {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-color: #2ecc71;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-color: #e74c3c;
+        }
+
+        .answer-btn.selected {
+            box-shadow: 0 0 8px;
+        }
+
+        .player1 .answer-btn.selected {
+            border-color: #00b4d8;
+            background: rgba(0, 180, 216, 0.3);
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.4);
+        }
+
+        .player2 .answer-btn.selected {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.3);
+            box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+        }
+
+        .answer-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .cooldown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .answer-character-img {
+            width: 85px; /* Aumentado */
+            height: 85px; /* Aumentado */
+            object-fit: contain;
+            margin-bottom: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        .answer-info {
+            text-align: center;
+        }
+
+        .answer-text {
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+
+        .answer-key {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .player1 .answer-key {
+            background: rgba(0, 180, 216, 0.3);
+        }
+
+        .player2 .answer-key {
+            background: rgba(255, 107, 107, 0.3);
+        }
+
+        /* Player Status */
+        .player-status {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .player-status.playing {
+            background: rgba(0, 180, 216, 0.2);
+            color: #00b4d8;
+        }
+
+        .player-status.finished {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .player-status.waiting {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+
+        /* Divider entre jogadores */
+        .screen-divider {
+            width: 3px;
+            background: linear-gradient(to bottom, #00b4d8, #ff6b6b);
+            border-radius: 1.5px;
+            margin: 0 5px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .split-screen {
+                flex-direction: column;
+            }
+            
+            .screen-divider {
+                width: 100%;
+                height: 3px;
+                margin: 8px 0;
+            }
+            
+            .character-slot {
+                width: 170px;
+            }
+            
+            .character-image {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .answer-btn {
+                width: 110px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-header {
+                padding: 10px;
+            }
+            
+            .game-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .player-header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            
+            .player-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .characters-display {
+                gap: 8px;
+            }
+            
+            .character-slot {
+                width: 150px;
+                padding: 10px;
+            }
+            
+            .character-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .answer-btn {
+                width: 100px;
+                padding: 6px 4px;
+            }
+            
+            .answer-character-img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+
+    <div class="container">
+        <div class="game-header">
+            <div class="game-title">
+                <h1>Reaction Kingdom - Split Screen</h1>
+            </div>
+        </div>
+
+        <div class="split-screen">
+            <!-- Player 1 Section -->
+            <div class="player-section player1 active" id="player1-section">
+                <div class="player-status playing" id="player1-status">JOGANDO</div>
+                <div class="player-header">
+                    <div class="player-name player1" id="player1-name">Player 1</div>
+                    <div class="player-stats">
+                        <div class="stat-box">
+                            <div class="stat-value" id="player1-round">1/10</div>
+                            <div class="stat-label">Rodada</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="player1-correct">0</div>
+                            <div class="stat-label">Acertos</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="player1-time">00:00</div>
+                            <div class="stat-label">Tempo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="player1-progress" style="width: 10%"></div>
+                </div>
+
+                <div class="game-area">
+                    <div class="instruction">
+                        <h2>Qual é a personagem correta?</h2>
+                    </div>
+
+                    <div class="characters-display">
+                        <div class="character-slot" id="player1-slot1">
+                            <img class="character-image" id="player1-char1-img" src="" alt="Personagem 1">
+                            <div class="character-info">
+                                <div class="character-name" id="player1-char1-name">Carregando...</div>
+                                <div class="character-color" id="player1-char1-color"></div>
+                            </div>
+                        </div>
+
+                        <div class="character-slot" id="player1-slot2">
+                            <img class="character-image" id="player1-char2-img" src="" alt="Personagem 2">
+                            <div class="character-info">
+                                <div class="character-name" id="player1-char2-name">Carregando...</div>
+                                <div class="character-color" id="player1-char2-color"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="answer-section">
+                        <!-- Linha divisória" -->
+                        <div class="answer-divider"></div>
+                        <div class="answer-choices" id="player1-answer-buttons">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="screen-divider"></div>
+
+            <!-- Player 2 Section -->
+            <div class="player-section player2 active" id="player2-section">
+                <div class="player-status playing" id="player2-status">JOGANDO</div>
+                <div class="player-header">
+                    <div class="player-name player2" id="player2-name">Player 2</div>
+                    <div class="player-stats">
+                        <div class="stat-box">
+                            <div class="stat-value" id="player2-round">1/10</div>
+                            <div class="stat-label">Rodada</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="player2-correct">0</div>
+                            <div class="stat-label">Acertos</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="player2-time">00:00</div>
+                            <div class="stat-label">Tempo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="player2-progress" style="width: 10%"></div>
+                </div>
+
+                <div class="game-area">
+                    <div class="instruction">
+                        <h2>Qual é a personagem correta?</h2>
+                    </div>
+
+                    <div class="characters-display">
+                        <div class="character-slot" id="player2-slot1">
+                            <img class="character-image" id="player2-char1-img" src="" alt="Personagem 1">
+                            <div class="character-info">
+                                <div class="character-name" id="player2-char1-name">Carregando...</div>
+                                <div class="character-color" id="player2-char1-color"></div>
+                            </div>
+                        </div>
+
+                        <div class="character-slot" id="player2-slot2">
+                            <img class="character-image" id="player2-char2-img" src="" alt="Personagem 2">
+                            <div class="character-info">
+                                <div class="character-name" id="player2-char2-name">Carregando...</div>
+                                <div class="character-color" id="player2-char2-color"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="answer-section">
+                        <!-- Linha divisória -->
+                        <div class="answer-divider"></div>
+                        <div class="answer-choices" id="player2-answer-buttons">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO DO JOGO
+        // ============================================
+        
+        const personagens = {
+            rei: { 
+                original: 'vermelho', 
+                pasta: 'rei',
+                nomeExibicao: 'Rei',
+                teclaP1: 'A',
+                teclaP2: '←'
+            },
+            princesa: { 
+                original: 'azul', 
+                pasta: 'princesa',
+                nomeExibicao: 'Princesa',
+                teclaP1: 'S',
+                teclaP2: '↑'
+            },
+            bruxa: { 
+                original: 'roxo', 
+                pasta: 'bruxa',
+                nomeExibicao: 'Bruxa',
+                teclaP1: 'D',
+                teclaP2: '→'
+            },
+            lobo: { 
+                original: 'cinzento', 
+                pasta: 'lobo',
+                nomeExibicao: 'Lobo',
+                teclaP1: 'W',
+                teclaP2: '↓'
+            },
+            aldeao: { 
+                original: 'castanho', 
+                pasta: 'aldeao',
+                nomeExibicao: 'Aldeão',
+                teclaP1: ' ',
+                teclaP2: 'Enter'
+            }
+        };
+
+        const ordemPersonagens = ['rei', 'princesa', 'bruxa', 'lobo', 'aldeao'];
+        const todasCores = ['azul', 'castanho', 'cinzento', 'roxo', 'vermelho'];
+        
+        // ============================================
+        // FUNÇÕES DE GERAÇÃO DE RODADA (INDEPENDENTES)
+        // ============================================
+        
+        function gerarRodadaAleatoria() {
+            const temOriginal = Math.random() < 0.5;
+            
+            if (temOriginal) {
+                const personagemComOriginal = ordemPersonagens[Math.floor(Math.random() * ordemPersonagens.length)];
+                const p1 = personagens[personagemComOriginal];
+                
+                let personagemSemOriginal;
+                do {
+                    personagemSemOriginal = ordemPersonagens[Math.floor(Math.random() * ordemPersonagens.length)];
+                } while (personagemSemOriginal === personagemComOriginal);
+                
+                const p2 = personagens[personagemSemOriginal];
+                
+                let coresDisponiveisP2 = todasCores.filter(cor => 
+                    cor !== p2.original &&
+                    cor !== p1.original
+                );
+                
+                if (coresDisponiveisP2.length === 0) coresDisponiveisP2 = [p1.original];
+                
+                const corP2 = coresDisponiveisP2[Math.floor(Math.random() * coresDisponiveisP2.length)];
+                
+                return {
+                    personagem1: {
+                        nome: personagemComOriginal,
+                        cor: p1.original,
+                        nomeExibicao: p1.nomeExibicao,
+                        pasta: p1.pasta,
+                        arquivo: `${personagemComOriginal}.png`,
+                        temOriginal: true
+                    },
+                    personagem2: {
+                        nome: personagemSemOriginal,
+                        cor: corP2,
+                        nomeExibicao: p2.nomeExibicao,
+                        pasta: p2.pasta,
+                        arquivo: `${personagemSemOriginal}_${corP2}.png`,
+                        temOriginal: false
+                    },
+                    respostaCorreta: personagemComOriginal,
+                    respostaExibicao: p1.nomeExibicao
+                };
+            } else {
+                let p1Nome = ordemPersonagens[Math.floor(Math.random() * ordemPersonagens.length)];
+                let p2Nome = ordemPersonagens[Math.floor(Math.random() * ordemPersonagens.length)];
+                
+                while (p2Nome === p1Nome) {
+                    p2Nome = ordemPersonagens[Math.floor(Math.random() * ordemPersonagens.length)];
+                }
+                
+                const p1 = personagens[p1Nome];
+                const p2 = personagens[p2Nome];
+                
+                let coresP1Disponiveis = todasCores.filter(cor => 
+                    cor !== p1.original &&
+                    cor !== p2.original
+                );
+                
+                if (coresP1Disponiveis.length === 0) coresP1Disponiveis = [p1.original];
+                
+                let corP1 = coresP1Disponiveis[Math.floor(Math.random() * coresP1Disponiveis.length)];
+                
+                let coresP2Disponiveis = todasCores.filter(cor => 
+                    cor !== p2.original &&
+                    cor !== p1.original &&
+                    cor !== corP1
+                );
+                
+                if (coresP2Disponiveis.length === 0) coresP2Disponiveis = [p2.original];
+                
+                let corP2 = coresP2Disponiveis[Math.floor(Math.random() * coresP2Disponiveis.length)];
+                
+                const personagensExibidas = [p1Nome, p2Nome];
+                const coresExibidas = [corP1, corP2];
+                
+                let candidatas = [];
+                
+                for (const nome of ordemPersonagens) {
+                    const info = personagens[nome];
+                    if (!personagensExibidas.includes(nome) && !coresExibidas.includes(info.original)) {
+                        candidatas.push(nome);
+                    }
+                }
+                
+                if (candidatas.length === 0) {
+                    for (const nome of ordemPersonagens) {
+                        if (!personagensExibidas.includes(nome)) {
+                            candidatas.push(nome);
+                            break;
+                        }
+                    }
+                }
+                
+                const respostaCorreta = candidatas[0] || 'rei';
+                
+                return {
+                    personagem1: {
+                        nome: p1Nome,
+                        cor: corP1,
+                        nomeExibicao: p1.nomeExibicao,
+                        pasta: p1.pasta,
+                        arquivo: `${p1Nome}_${corP1}.png`,
+                        temOriginal: false
+                    },
+                    personagem2: {
+                        nome: p2Nome,
+                        cor: corP2,
+                        nomeExibicao: p2.nomeExibicao,
+                        pasta: p2.pasta,
+                        arquivo: `${p2Nome}_${corP2}.png`,
+                        temOriginal: false
+                    },
+                    respostaCorreta: respostaCorreta,
+                    respostaExibicao: personagens[respostaCorreta].nomeExibicao
+                };
+            }
+        }
+        
+        // ============================================
+        // CLASSE JOGADOR (GAME INSTANCE INDEPENDENTE)
+        // ============================================
+        
+        class JogadorGame {
+            constructor(playerId, playerName) {
+                this.playerId = playerId;
+                this.playerName = playerName;
+                
+                this.currentRound = 1;
+                this.totalRounds = 10;
+                this.correctAnswers = 0;
+                this.totalAttempts = 0;
+                this.startTime = Date.now();
+                this.currentRoundData = null;
+                this.selectedAnswer = null;
+                this.gameActive = true;
+                this.cooldownActive = false;
+                this.cooldownTimer = 3;
+                this.cooldownInterval = null;
+                this.finished = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.updateDisplayName();
+                this.updateUI();
+                this.generateRound();
+                this.createAnswerButtons();
+                this.startTimer();
+            }
+            
+            updateDisplayName() {
+                document.getElementById(`${this.playerId}-name`).textContent = this.playerName;
+            }
+            
+            generateRound() {
+                this.currentRoundData = gerarRodadaAleatoria();
+                this.selectedAnswer = null;
+                this.updateDisplay();
+                this.clearAnswerButtons();
+            }
+            
+            updateDisplay() {
+                if (!this.currentRoundData) return;
+                
+                const char1Img = document.getElementById(`${this.playerId}-char1-img`);
+                const char1Name = document.getElementById(`${this.playerId}-char1-name`);
+                const char1Color = document.getElementById(`${this.playerId}-char1-color`);
+                
+                char1Img.src = `assets/${this.currentRoundData.personagem1.pasta}/${this.currentRoundData.personagem1.arquivo}`;
+                char1Img.onerror = function() {
+                    this.src = `assets/${this.currentRoundData.personagem1.pasta}/${this.currentRoundData.personagem1.nome}.png`;
+                };
+                char1Name.textContent = this.currentRoundData.personagem1.nomeExibicao;
+                char1Color.textContent = `Cor: ${this.currentRoundData.personagem1.cor}`;
+                
+                const char2Img = document.getElementById(`${this.playerId}-char2-img`);
+                const char2Name = document.getElementById(`${this.playerId}-char2-name`);
+                const char2Color = document.getElementById(`${this.playerId}-char2-color`);
+                
+                char2Img.src = `assets/${this.currentRoundData.personagem2.pasta}/${this.currentRoundData.personagem2.arquivo}`;
+                char2Img.onerror = function() {
+                    this.src = `assets/${this.currentRoundData.personagem2.pasta}/${this.currentRoundData.personagem2.nome}.png`;
+                };
+                char2Name.textContent = this.currentRoundData.personagem2.nomeExibicao;
+                char2Color.textContent = `Cor: ${this.currentRoundData.personagem2.cor}`;
+            }
+            
+            createAnswerButtons() {
+                const container = document.getElementById(`${this.playerId}-answer-buttons`);
+                container.innerHTML = '';
+                
+                for (const nome of ordemPersonagens) {
+                    const info = personagens[nome];
+                    const tecla = this.playerId === 'player1' ? info.teclaP1 : info.teclaP2;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'answer-btn';
+                    btn.dataset.personagem = nome;
+                    btn.innerHTML = `
+                        <img class="answer-character-img" src="assets/${info.pasta}/${nome}.png" alt="${info.nomeExibicao}">
+                        <div class="answer-info">
+                            <div class="answer-text">${info.nomeExibicao}</div>
+                            <div class="answer-key">${tecla === ' ' ? 'ESPAÇO' : tecla}</div>
+                        </div>
+                    `;
+                    
+                    btn.onclick = () => this.selectAnswer(nome, btn);
+                    container.appendChild(btn);
+                }
+            }
+            
+            clearAnswerButtons() {
+                const buttons = document.querySelectorAll(`#${this.playerId}-answer-buttons .answer-btn`);
+                buttons.forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'incorrect', 'disabled');
+                    const overlay = btn.querySelector('.cooldown-overlay');
+                    if (overlay) overlay.remove();
+                });
+            }
+            
+            selectAnswer(answer, button) {
+                if (!this.gameActive || this.selectedAnswer || this.cooldownActive || this.finished) return;
+                
+                this.selectedAnswer = answer;
+                this.totalAttempts++;
+                
+                const allButtons = document.querySelectorAll(`#${this.playerId}-answer-buttons .answer-btn`);
+                allButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                button.classList.add('selected');
+                
+                const isCorrect = answer === this.currentRoundData.respostaCorreta;
+                
+                if (isCorrect) {
+                    this.correctAnswers++;
+                    button.classList.add('correct');
+                    
+                    this.updateUI();
+                    
+                    setTimeout(() => {
+                        if (this.currentRound >= this.totalRounds) {
+                            this.finishGame();
+                        } else {
+                            this.currentRound++;
+                            this.generateRound();
+                            this.updateUI();
+                            
+                            const progress = (this.currentRound / this.totalRounds) * 100;
+                            document.getElementById(`${this.playerId}-progress`).style.width = `${progress}%`;
+                        }
+                    }, 500);
+                } else {
+                    button.classList.add('incorrect');
+                    this.startCooldown();
+                }
+                
+                this.updateUI();
+            }
+            
+            startCooldown() {
+                this.cooldownActive = true;
+                this.cooldownTimer = 3;
+                
+                const buttons = document.querySelectorAll(`#${this.playerId}-answer-buttons .answer-btn`);
+                buttons.forEach(btn => {
+                    btn.classList.add('disabled');
+                    
+                    const overlay = document.createElement('div');
+                    overlay.className = 'cooldown-overlay';
+                    overlay.textContent = this.cooldownTimer;
+                    btn.appendChild(overlay);
+                });
+                
+                document.getElementById(`${this.playerId}-status`).textContent = 'COOLDOWN';
+                document.getElementById(`${this.playerId}-status`).className = 'player-status waiting';
+                
+                this.cooldownInterval = setInterval(() => {
+                    this.cooldownTimer--;
+                    
+                    document.querySelectorAll(`#${this.playerId}-answer-buttons .cooldown-overlay`).forEach(overlay => {
+                        overlay.textContent = this.cooldownTimer;
+                    });
+                    
+                    if (this.cooldownTimer <= 0) {
+                        clearInterval(this.cooldownInterval);
+                        this.cooldownActive = false;
+                        this.selectedAnswer = null;
+                        
+                        const buttons = document.querySelectorAll(`#${this.playerId}-answer-buttons .answer-btn`);
+                        buttons.forEach(btn => {
+                            btn.classList.remove('disabled', 'incorrect', 'selected');
+                            const overlay = btn.querySelector('.cooldown-overlay');
+                            if (overlay) overlay.remove();
+                        });
+                        
+                        document.getElementById(`${this.playerId}-status`).textContent = 'JOGANDO';
+                        document.getElementById(`${this.playerId}-status`).className = 'player-status playing';
+                    }
+                }, 1000);
+            }
+            
+            startTimer() {
+                setInterval(() => {
+                    this.updateTimer();
+                }, 1000);
+            }
+            
+            updateTimer() {
+                if (this.finished) return;
+                
+                const elapsed = Date.now() - this.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById(`${this.playerId}-time`).textContent = timeString;
+            }
+            
+            updateUI() {
+                document.getElementById(`${this.playerId}-round`).textContent = `${this.currentRound}/${this.totalRounds}`;
+                document.getElementById(`${this.playerId}-correct`).textContent = this.correctAnswers;
+            }
+            
+            finishGame() {
+                this.gameActive = false;
+                this.finished = true;
+                
+                const elapsed = Date.now() - this.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const accuracy = this.totalAttempts === 0 ? 0 : Math.round((this.correctAnswers / this.totalAttempts) * 100);
+                
+                const playerResults = {
+                    name: this.playerName,
+                    accuracy: accuracy,
+                    timeString: timeString,
+                    time: elapsed,
+                    correct: this.correctAnswers,
+                    attempts: this.totalAttempts
+                };
+                
+                localStorage.setItem(`${this.playerId}Results`, JSON.stringify(playerResults));
+                
+                document.getElementById(`${this.playerId}-section`).classList.remove('active');
+                document.getElementById(`${this.playerId}-section`).classList.add('finished');
+                document.getElementById(`${this.playerId}-status`).textContent = 'TERMINADO';
+                document.getElementById(`${this.playerId}-status`).className = 'player-status finished';
+                
+                document.querySelectorAll(`#${this.playerId}-answer-buttons .answer-btn`).forEach(btn => {
+                    btn.classList.add('disabled');
+                });
+                
+                this.checkBothFinished();
+            }
+            
+            checkBothFinished() {
+                if (player1Game.finished && player2Game.finished) {
+                    setTimeout(() => {
+                        window.location.href = 'splitscreen-results.html';
+                    }, 5000);
+                }
+            }
+        }
+        
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        
+        let player1Game = null;
+        let player2Game = null;
+        
+        // ============================================
+        // FUNÇÕES GLOBAIS
+        // ============================================
+        
+        function initGame() {
+            const player1Name = localStorage.getItem('player1Name') || 'Player 1';
+            const player2Name = localStorage.getItem('player2Name') || 'Player 2';
+            
+            player1Game = new JogadorGame('player1', player1Name);
+            player2Game = new JogadorGame('player2', player2Name);
+        }
+        
+        function goBack() {
+            window.location.href = 'play.html';
+        }
+        
+        // ============================================
+        // CONTROLES DE TECLADO
+        // ============================================
+        
+        document.addEventListener('keydown', function(event) {
+            const key = event.key.toUpperCase();
+            
+            const teclasP1 = {
+                'A': 'rei',
+                'S': 'princesa',
+                'D': 'bruxa',
+                'W': 'lobo',
+                ' ': 'aldeao'
+            };
+            
+            const teclasP2 = {
+                'ARROWLEFT': 'rei',
+                'ARROWUP': 'princesa',
+                'ARROWRIGHT': 'bruxa',
+                'ARROWDOWN': 'lobo',
+                'ENTER': 'aldeao'
+            };
+            
+            let keyName = key;
+            if (teclasP1[keyName] !== undefined && player1Game && !player1Game.finished && 
+                !player1Game.cooldownActive && player1Game.selectedAnswer === null) {
+                const personagem = teclasP1[keyName];
+                const buttons = document.querySelectorAll('#player1-answer-buttons .answer-btn');
+                
+                for (const btn of buttons) {
+                    if (btn.dataset.personagem === personagem) {
+                        player1Game.selectAnswer(personagem, btn);
+                        break;
+                    }
+                }
+            }
+            
+            if (event.key.includes('Arrow')) {
+                keyName = event.key.toUpperCase();
+            }
+            
+            if (teclasP2[keyName] !== undefined && player2Game && !player2Game.finished && 
+                !player2Game.cooldownActive && player2Game.selectedAnswer === null) {
+                const personagem = teclasP2[keyName];
+                const buttons = document.querySelectorAll('#player2-answer-buttons .answer-btn');
+                
+                for (const btn of buttons) {
+                    if (btn.dataset.personagem === personagem) {
+                        player2Game.selectAnswer(personagem, btn);
+                        break;
+                    }
+                }
+            }
+            
+            if (key === 'ESCAPE') {
+                goBack();
+            }
+        });
+        
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        
+        window.onload = function() {
+            initGame();
+        };
+    </script>
+</body>
+</html>

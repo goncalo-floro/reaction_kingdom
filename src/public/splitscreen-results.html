@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Kingdom - Resultados Split Screen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .results-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00b4d8, #0077b6, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .results-header p {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .winner-section {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        .winner-trophy {
+            font-size: 4rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .winner-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .winner-name.first {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 3px solid #ffd700;
+            color: #ffd700;
+        }
+
+        .winner-name.second {
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(192, 192, 192, 0.1));
+            border: 3px solid #c0c0c0;
+            color: #c0c0c0;
+        }
+
+        .winner-title {
+            font-size: 1.3rem;
+            color: #a0a0a0;
+            margin-top: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .player-results {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .player-results:hover {
+            transform: translateY(-10px);
+        }
+
+        .player-results.player1 {
+            border-color: #00b4d8;
+        }
+
+        .player-results.player2 {
+            border-color: #ff6b6b;
+        }
+
+        .player-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .player1 .player-avatar {
+            background: rgba(0, 180, 216, 0.2);
+            color: #00b4d8;
+        }
+
+        .player2 .player-avatar {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+
+        .player-info {
+            flex: 1;
+        }
+
+        .player-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .player1 .player-name {
+            color: #00b4d8;
+        }
+
+        .player2 .player-name {
+            color: #ff6b6b;
+        }
+
+        .player-rank {
+            font-size: 1rem;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        /* Estatísticas simplificadas */
+        .stats-simple {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat-item-simple {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value-simple {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .player1 .stat-value-simple {
+            color: #00b4d8;
+        }
+
+        .player2 .stat-value-simple {
+            color: #ff6b6b;
+        }
+
+        .stat-label-simple {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+
+        .accuracy-bar {
+            margin-top: 15px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .accuracy-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.5s ease;
+        }
+
+        .player1 .accuracy-fill {
+            background: linear-gradient(90deg, #00b4d8, #0077b6);
+        }
+
+        .player2 .accuracy-fill {
+            background: linear-gradient(90deg, #ff6b6b, #ff4757);
+        }
+
+        .actions-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .actions-title {
+            font-size: 1.5rem;
+            color: #00b4d8;
+            margin-bottom: 25px;
+        }
+
+        .actions-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 220px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .play-again-btn {
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            color: white;
+        }
+
+        .play-again-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.4);
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .results-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .winner-name {
+                font-size: 1.8rem;
+                padding: 12px 25px;
+            }
+            
+            .player-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .stat-value-simple {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goToMenu()">
+        <i class="fas fa-arrow-left"></i> Menu
+    </button>
+
+    <div class="container">
+        <div class="results-header">
+            <h1><i class="fas fa-trophy"></i> Resultados Finais</h1>
+        </div>
+        
+        <div class="winner-section" id="winner-section">
+            <!-- Conteúdo gerado pelo JavaScript -->
+        </div>
+        
+        <div class="results-grid">
+            <div class="player-results player1" id="player1-results">
+                <!-- Conteúdo gerado pelo JavaScript -->
+            </div>
+            
+            <div class="player-results player2" id="player2-results">
+                <!-- Conteúdo gerado pelo JavaScript -->
+            </div>
+        </div>
+        
+        <div class="actions-section">
+            <div class="actions-title">O que gostaria de fazer agora?</div>
+            <div class="actions-buttons">
+                <button class="action-btn play-again-btn" onclick="playAgain()">
+                    <i class="fas fa-redo"></i> Jogar Novamente
+                </button>
+                <button class="action-btn menu-btn" onclick="goToMenu()">
+                    <i class="fas fa-home"></i> Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let player1Results = null;
+        let player2Results = null;
+        let winner = null;
+        
+        function loadResults() {
+            const savedP1 = localStorage.getItem('player1Results');
+            const savedP2 = localStorage.getItem('player2Results');
+            
+            if (!savedP1 || !savedP2) {
+                goToMenu();
+                return;
+            }
+            
+            player1Results = JSON.parse(savedP1);
+            player2Results = JSON.parse(savedP2);
+            
+            // Determinar vencedor (quem tem mais acertos)
+            if (player1Results.correct > player2Results.correct) {
+                winner = { ...player1Results, rank: 1, id: 'player1' };
+            } else if (player2Results.correct > player1Results.correct) {
+                winner = { ...player2Results, rank: 1, id: 'player2' };
+            } else {
+                // Empate - quem tem menor tempo vence
+                if (player1Results.time < player2Results.time) {
+                    winner = { ...player1Results, rank: 1, id: 'player1' };
+                } else {
+                    winner = { ...player2Results, rank: 1, id: 'player2' };
+                }
+            }
+            
+            displayResults();
+        }
+        
+        function displayResults() {
+            // Exibir vencedor
+            const winnerSection = document.getElementById('winner-section');
+            winnerSection.innerHTML = `
+                <div class="winner-trophy">
+                    ${winner.rank === 1 ? '<i class="fas fa-crown"></i>' : '<i class="fas fa-medal"></i>'}
+                </div>
+                <div class="winner-name ${winner.rank === 1 ? 'first' : 'second'}">
+                    ${winner.name}
+                </div>
+                <div class="winner-title">
+                    ${winner.rank === 1 ? 'VENCEDOR' : 'SEGUNDO LUGAR   '}
+                </div>
+            `;
+            
+            // Exibir resultados do Player 1
+            document.getElementById('player1-results').innerHTML = `
+                <div class="player-header">
+                    <div class="player-avatar">1</div>
+                    <div class="player-info">
+                        <div class="player-name">${player1Results.name}</div>
+                    </div>
+                </div>
+                <div class="stats-simple">
+                    <div class="stat-item-simple">
+                        <div class="stat-value-simple">${player1Results.accuracy}%</div>
+                        <div class="stat-label-simple">Precisão</div>
+                        <div class="accuracy-bar">
+                            <div class="accuracy-fill" style="width: ${player1Results.accuracy}%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item-simple">
+                        <div class="stat-value-simple">${player1Results.timeString}</div>
+                        <div class="stat-label-simple">Tempo Total</div>
+                    </div>
+                </div>
+            `;
+            
+            // Exibir resultados do Player 2
+            document.getElementById('player2-results').innerHTML = `
+                <div class="player-header">
+                    <div class="player-avatar">2</div>
+                    <div class="player-info">
+                        <div class="player-name">${player2Results.name}</div>
+                    </div>
+                </div>
+                <div class="stats-simple">
+                    <div class="stat-item-simple">
+                        <div class="stat-value-simple">${player2Results.accuracy}%</div>
+                        <div class="stat-label-simple">Precisão</div>
+                        <div class="accuracy-bar">
+                            <div class="accuracy-fill" style="width: ${player2Results.accuracy}%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item-simple">
+                        <div class="stat-value-simple">${player2Results.timeString}</div>
+                        <div class="stat-label-simple">Tempo Total</div>
+                    </div>
+                </div>
+            `;
+            
+            // Animar barras de precisão
+            setTimeout(() => {
+                document.querySelectorAll('.accuracy-fill').forEach(fill => {
+                    const width = fill.style.width;
+                    fill.style.width = '0%';
+                    setTimeout(() => {
+                        fill.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        }
+        
+        function playAgain() {
+            // Manter os mesmos nomes e reiniciar o jogo
+            window.location.href = 'splitscreen.html';
+        }
+        
+        function goToMenu() {
+            window.location.href = 'play.html';
+        }
+        
+        // Teclas de atalho
+        document.addEventListener('keydown', function(event) {
+            const key = event.key.toUpperCase();
+            
+            if (key === 'ENTER' || key === ' ') {
+                playAgain();
+            } else if (key === 'ESCAPE') {
+                goToMenu();
+            }
+        });
+        
+        // Carregar resultados ao iniciar
+        window.onload = loadResults;
+    </script>
+</body>
+</html>
