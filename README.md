@@ -2,6 +2,7 @@
 
 É um jogo de reflexos e raciocínio rápido.  
 O objetivo é responder corretamente a cada ronda no menor tempo possível.
+
 Jogo já está disponível em https://reaction-kingdom.netlify.app
 
 ### Modos de Jogo
