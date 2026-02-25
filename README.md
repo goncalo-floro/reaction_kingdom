@@ -9,7 +9,6 @@ O objetivo é responder corretamente a cada ronda no menor tempo possível.
 - **Split Screen** – Dois jogadores no mesmo computador, cada um com os seus controles.
 
 ## Como correr
-### Passos
 
 1. **Clonar o repositório**
    ```bash
