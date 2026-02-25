@@ -88,7 +88,7 @@
 
         .winner-title {
             font-size: 1.3rem;
-            color: #a0a0a0;
+            color: #000000;
             margin-top: 10px;
         }
 
@@ -169,7 +169,7 @@
 
         .player-rank {
             font-size: 1rem;
-            color: #a0a0a0;
+            color: #000000;
             font-style: italic;
         }
 
@@ -203,7 +203,7 @@
 
         .stat-label-simple {
             font-size: 1.1rem;
-            color: #a0a0a0;
+            color: #000000;
         }
 
         .accuracy-bar {
@@ -235,7 +235,7 @@
 
         .actions-title {
             font-size: 1.5rem;
-            color: #00b4d8;
+            color: #000000;
             margin-bottom: 25px;
         }
 
@@ -272,14 +272,14 @@
         }
 
         .menu-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .menu-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.4);
         }
 
         .back-btn {
@@ -357,10 +357,6 @@
     <link rel="stylesheet" href="splitscreen-results.css">
 </head>
 <body>
-    <button class="back-btn" onclick="goToMenu()">
-        <i class="fas fa-arrow-left"></i> Menu
-    </button>
-
     <div class="container">
         <div class="results-header">
             <h1><i class="fas fa-trophy"></i> Resultados Finais</h1>

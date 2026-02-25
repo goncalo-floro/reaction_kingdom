@@ -294,14 +294,14 @@
         }
 
         .answer-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #bda285, #8a7359); /* lighter brown */
+            border: 2px solid rgba(194, 166, 137, 0.6);
             color: white;
             padding: 8px 6px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
             width: 140px; /* Aumentado */
             display: flex;
             flex-direction: column;
@@ -314,21 +314,13 @@
 
         .answer-btn:hover:not(.disabled) {
             transform: scale(1.03);
-        }
-
-        .player1 .answer-btn:hover:not(.disabled) {
-            background: rgba(0, 180, 216, 0.2);
-            border-color: #00b4d8;
-        }
-
-        .player2 .answer-btn:hover:not(.disabled) {
-            background: rgba(255, 107, 107, 0.2);
-            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #b1987d, #9a754c);
+            border-color: rgba(255, 255, 255, 0.8);
         }
 
         .answer-btn.correct {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            border-color: #2ecc71;
+            background: linear-gradient(135deg, #e89e5d, #b96a39);
+            border-color: #ffffff;
         }
 
         .answer-btn.incorrect {
@@ -548,7 +540,7 @@
     <div class="container">
         <div class="game-header">
             <div class="game-title">
-                <h1>Reaction Kingdom - Split Screen</h1>
+                <h1>Reaction Kingdom</h1>
             </div>
         </div>
 
@@ -565,7 +557,7 @@
                         </div>
                         <div class="stat-box">
                             <div class="stat-value" id="player1-correct">0</div>
-                            <div class="stat-label">Acertos</div>
+                            <div class="stat-label">Erros</div>
                         </div>
                         <div class="stat-box">
                             <div class="stat-value" id="player1-time">00:00</div>
@@ -625,7 +617,7 @@
                         </div>
                         <div class="stat-box">
                             <div class="stat-value" id="player2-correct">0</div>
-                            <div class="stat-label">Acertos</div>
+                            <div class="stat-label">Erros</div>
                         </div>
                         <div class="stat-box">
                             <div class="stat-value" id="player2-time">00:00</div>
@@ -1045,8 +1037,9 @@
             }
             
             updateUI() {
-                document.getElementById(`${this.playerId}-round`).textContent = `${this.currentRound}/${this.totalRounds}`;
-                document.getElementById(`${this.playerId}-correct`).textContent = this.correctAnswers;
+                    document.getElementById(`${this.playerId}-round`).textContent = `${this.currentRound}/${this.totalRounds}`;
+                    const errors = Math.max(0, this.totalAttempts - this.correctAnswers);
+                    document.getElementById(`${this.playerId}-correct`).textContent = errors;
             }
             
             finishGame() {

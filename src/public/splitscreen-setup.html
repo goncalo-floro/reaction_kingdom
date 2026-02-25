@@ -4,142 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reaction Kingdom - Split Screen Setup</title>
-    <link rel="stylesheet" href="splitscreen-setup.css">
+    <link rel="stylesheet" href="play.css">
     <style>
-        /* Estilos gerais */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* Small overrides to keep splitscreen-setup layout while reusing site theme */
+        .container { max-width: 1400px; width: 100%; }
+        .setup-card { padding: 36px; border-radius: 12px; display:flex; flex-direction:column; min-height:680px; }
+        .setup-title { color: var(--color-text-medium); font-weight:700; }
+        .player-input { text-align:center; font-size: 1.25rem; }
+        .page-title { font-size: 2rem; text-align: center; margin: 18px 0 6px; font-weight:800; color: var(--color-text-dark); }
+        .page-subtitle { text-align: center; color: var(--color-text-light); margin-bottom: 20px; }
+        .back-btn { background: transparent; border: 2px solid rgba(80,50,20,0.08); }
+        .start-btn { background: linear-gradient(180deg, #b0893a, #a1742f); color: #fff; }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, #00b4d8, #0077b6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: #a0a0a0;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        /* Estilo da caixa de configuração */
-        .setup-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 0 auto 30px;
-            max-width: 800px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .setup-title {
-            text-align: center;
-            font-size: 1.8rem;
-            color: #00b4d8;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Configuração dos jogadores */
+        /* Layout: players side-by-side on desktop */
         .players-setup {
             display: flex;
-            gap: 40px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            gap: 32px;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: nowrap;
         }
 
         .player-input-group {
-            flex: 1;
-            min-width: 300px;
+            flex: 1 1 48%;
+            min-width: 320px;
+            max-width: 48%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .player-input-group label {
-            display: block;
-            font-size: 1.2rem;
-            color: #00b4d8;
-            margin-bottom: 15px;
-            font-weight: bold;
+        /* Name plate row */
+        .name-row { display:flex; align-items:center; gap:12px; justify-content:center; }
+        .name-plate {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-dark);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            border: 2px solid rgba(80,50,20,0.08);
+            min-width: 120px;
             text-align: center;
         }
-
-        .input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
+        .name-input {
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 2px solid rgba(80,50,20,0.08);
+            min-width: 220px;
+            max-width: 420px;
+            background: var(--color-bg-main);
+            color: var(--color-text-dark);
+            font-weight:700;
+            font-size: 1.25rem;
         }
 
-        .player-input {
-            width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: white;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
+        /* Actions (buttons) at bottom, larger */
+        .setup-actions { margin-top: auto; display:flex; gap:24px; justify-content:center; }
+        .setup-btn { padding: 18px 48px; font-size: 1.15rem; border-radius: 40px; font-weight:800; }
 
-        .player-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-            background: rgba(0, 180, 216, 0.1);
-            box-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
-        }
-
-        /* Controles - usando o mesmo estilo de play.html */
+        /* Make control preview look like the character boxes from instructions */
         .controls-preview {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px;
+            background: var(--color-bg-main);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden;
         }
 
         .controls-title {
-            font-size: 1.2rem;
-            color: #a0a0a0;
-            margin-bottom: 20px;
+            color: var(--color-text-medium);
+            font-weight: 700;
             text-align: center;
+            margin-bottom: 12px;
         }
 
-        /* Reutilizando o estilo da caixa de controles de play.html */
         .controls-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns -> 2 rows for 5 items */
+            gap: 12px 14px;
+            justify-items: center;
+            align-items: start;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .control-item {
@@ -147,142 +95,69 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            min-width: 90px;
+            padding: 14px 12px;
+            border-radius: 10px;
+            background: transparent;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            width: 100%; /* fill grid cell */
+            box-sizing: border-box;
+            border: 2px solid var(--border-color);
+            max-width: 320px;
         }
 
         .control-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
         }
 
         .control-character img {
-            width: 60px;
-            height: 60px;
+            width: 70%;
+            max-width: 120px;
+            height: auto;
             object-fit: contain;
-            margin-bottom: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .control-item:hover .control-character img {
-            transform: scale(1.05);
+            margin: 8px auto 10px;
+            border-radius: 8px;
+            background: transparent;
+            padding: 6px;
+            display: block;
         }
 
         .key {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: white;
-            min-width: 40px;
-            text-align: center;
-            margin-bottom: 4px;
+            color: var(--color-text-dark);
         }
 
-        .control-label {
-            font-size: 0.8rem;
-            color: #a0a0a0;
-            font-weight: 600;
+        @media (max-width: 880px) {
+            .players-setup { flex-direction: column; gap: 20px; }
+            .player-input-group { max-width: 100%; min-width: auto; }
+            .controls-items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .control-character img { width: 60%; max-width: 100px; height: auto; }
+            .control-item { min-width: auto; max-width: none; }
         }
 
-        /* Botões */
-        .setup-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .setup-btn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 180px;
-            font-weight: bold;
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, #00b4d8, #0077b6);
-            color: white;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 180, 216, 0.4);
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 768px) {
-            .players-setup {
-                flex-direction: column;
-            }
-            
-            .player-input-group {
-                min-width: 100%;
-            }
-            
-            .controls-items {
-                gap: 10px;
-            }
-            
-            .control-item {
-                min-width: 80px;
-            }
-            
-            .control-character img {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .setup-btn {
-                min-width: 100%;
-            }
-            
-            .setup-actions {
-                flex-direction: column;
-            }
+        /* Button hover animation (no color changes) */
+        .setup-btn { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+        .setup-btn:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.16);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header carregado automaticamente -->
+        <div id="header"></div>
         <div class="header">
-            <h1>Split Screen Setup</h1>
-            <p>Insira os nomes dos jogadores e prepare-se para a batalha de reação!</p>
+            <h1 class="page-title">Split Screen Setup</h1>
         </div>
         
         <div class="setup-card">
-            <div class="setup-title">Configurar Jogadores</div>
+            <p class="page-subtitle">Insira os nomes dos jogadores e prepare-se para a batalha de reação!</p>
             
             <div class="players-setup">
                 <div class="player-input-group">
-                    <label for="player1">Jogador 1</label>
-                    <div class="input-wrapper">
-                        <input type="text" 
-                               id="player1" 
-                               class="player-input" 
-                               placeholder="Player 1" 
-                               maxlength="12"
-                               value="Player 1">
+                    <div class="name-row">
+                        <div class="name-plate">Jogador 1:</div>
+                        <input type="text" id="player1" class="player-input name-input" placeholder="Player 1" maxlength="12" value="Player 1">
                     </div>
                     
                     <div class="controls-preview">
@@ -293,53 +168,43 @@
                                     <img src="assets/rei/rei.png" alt="Rei">
                                 </div>
                                 <div class="key">A</div>
-                                <div class="control-label">Rei</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/princesa/princesa.png" alt="Princesa">
                                 </div>
                                 <div class="key">S</div>
-                                <div class="control-label">Princesa</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/bruxa/bruxa.png" alt="Bruxa">
                                 </div>
                                 <div class="key">D</div>
-                                <div class="control-label">Bruxa</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/lobo/lobo.png" alt="Lobo">
                                 </div>
                                 <div class="key">W</div>
-                                <div class="control-label">Lobo</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/aldeao/aldeao.png" alt="Aldeão">
                                 </div>
                                 <div class="key">ESPAÇO</div>
-                                <div class="control-label">Aldeão</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="player-input-group">
-                    <label for="player2">Jogador 2</label>
-                    <div class="input-wrapper">
-                        <input type="text" 
-                               id="player2" 
-                               class="player-input" 
-                               placeholder="Player 2" 
-                               maxlength="12"
-                               value="Player 2">
+                    <div class="name-row">
+                        <div class="name-plate">Jogador 2:</div>
+                        <input type="text" id="player2" class="player-input name-input" placeholder="Player 2" maxlength="12" value="Player 2">
                     </div>
                     
                     <div class="controls-preview">
@@ -350,45 +215,40 @@
                                     <img src="assets/rei/rei.png" alt="Rei">
                                 </div>
                                 <div class="key">←</div>
-                                <div class="control-label">Rei</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/princesa/princesa.png" alt="Princesa">
                                 </div>
                                 <div class="key">↑</div>
-                                <div class="control-label">Princesa</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/bruxa/bruxa.png" alt="Bruxa">
                                 </div>
                                 <div class="key">→</div>
-                                <div class="control-label">Bruxa</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/lobo/lobo.png" alt="Lobo">
                                 </div>
                                 <div class="key">↓</div>
-                                <div class="control-label">Lobo</div>
                             </div>
-                            
+
                             <div class="control-item">
                                 <div class="control-character">
                                     <img src="assets/aldeao/aldeao.png" alt="Aldeão">
                                 </div>
                                 <div class="key">ENTER</div>
-                                <div class="control-label">Aldeão</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+            <br>
             <div class="setup-actions">
                 <button class="setup-btn back-btn" onclick="goBack()">
                     ← Voltar
@@ -400,6 +260,7 @@
         </div>
     </div>
     
+    <script src="app.js"></script>
     <script src="music.js"></script>
     <script>
         function goBack() {

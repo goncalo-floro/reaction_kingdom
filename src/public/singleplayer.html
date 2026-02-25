@@ -294,6 +294,7 @@
         .result-label {
             font-size: 1.2rem;
             color: #a0a0a0;
+            font-weight: 700;
         }
 
         .result-value {
@@ -324,9 +325,9 @@
         }
 
         .menu-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #A0522D, #8B4513);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
 
         .result-btn:hover {
@@ -353,7 +354,6 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
             transform: translateX(-5px);
         }
 
@@ -426,7 +426,7 @@
                 </div>
                 <div class="stat-box">
                     <div class="stat-value" id="correct">0</div>
-                    <div class="stat-label">Acertos</div>
+                    <div class="stat-label">Erros</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-value" id="timer">00:00</div>
@@ -498,7 +498,7 @@
                         <i class="fas fa-redo"></i> Jogar Novamente
                     </button>
                     <button class="result-btn menu-btn" onclick="goBack()">
-                        <i class="fas fa-home"></i> Menu Principal
+                        <i class="fas fa-home"></i> Menu
                     </button>
                 </div>
             </div>
@@ -900,7 +900,8 @@
         
         function updateUI() {
             document.getElementById('round').textContent = `${currentRound}/${totalRounds}`;
-            document.getElementById('correct').textContent = correctAnswers;
+            const errors = Math.max(0, totalAttempts - correctAnswers);
+            document.getElementById('correct').textContent = errors;
         }
         
         function endGame() {

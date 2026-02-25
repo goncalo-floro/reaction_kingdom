@@ -33,7 +33,7 @@
         style.textContent = `
             .btn {
                 position: fixed;
-                bottom: 20px;
+                top: 20px;
                 right: 20px;
                 background-color: rgba(0,0,0,0.7);
                 color: white;
