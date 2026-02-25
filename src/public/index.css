@@ -1,0 +1,74 @@
+/* Medieval theme for index page */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:root {
+    --color-accent: #b0893a; /* gold */
+    --color-bg-main: #f7f0d9; /* parchment */
+    --color-bg-secondary: #efe6cc;
+    --color-text-dark: #1d1207; /* darker brown for contrast */
+    --color-text-medium: #5b4634;
+    --color-text-light: #8b6f52;
+    --border-color: rgba(80,50,20,0.12);
+    --border-radius: 12px;
+    --space-xs: 6px;
+    --space-sm: 10px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --base-font-size: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body { height:100%; margin:0; font-family: 'Cinzel', Georgia, serif; background: radial-gradient(ellipse at center, #f7f0d9 0%, #efe6cc 60%), #f7f0d9; color:var(--color-text-dark); font-size: var(--base-font-size); line-height:1.5; }
+
+.container { max-width:1100px; margin: 0 auto; padding: 28px; }
+.header { display:flex; align-items:center; justify-content:space-between; padding: 12px 0; }
+.logo { margin:0; font-size:1.6rem; color:var(--color-accent); text-shadow: 0 1px 0 rgba(0,0,0,0.2); letter-spacing: 1px; }
+.nav { display:flex; gap:12px; }
+.nav-link { color:var(--color-text-medium); text-decoration:none; padding:8px 12px; border-radius:6px; background: transparent; border: 1px solid transparent; }
+.nav-link.active { background: linear-gradient(180deg, rgba(176,137,58,0.12), rgba(176,137,58,0.06)); color:var(--color-text-dark); border-color: rgba(176,137,58,0.2); }
+
+.main-content { padding: var(--space-lg) 0; }
+.section-title { font-size:calc(var(--base-font-size) * 1.9); margin: 0 0 var(--space-md) 0; color:var(--color-text-dark); text-align: center; text-shadow: 0 1px 0 rgba(255,255,255,0.3); }
+
+h1 { font-size: calc(var(--base-font-size) * 2.4); }
+h2 { font-size: calc(var(--base-font-size) * 1.8); }
+h3 { font-size: calc(var(--base-font-size) * 1.4); }
+
+.game-modes { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-lg); }
+.mode-card { background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,250,235,0.9)); padding: var(--space-md); border-radius: var(--border-radius); border: 3px double rgba(80,50,20,0.12); box-shadow: 0 8px 20px rgba(30,20,10,0.06); }
+.mode-description { margin-top: var(--space-sm); color: var(--color-text-medium); }
+.mode-actions { margin-top: var(--space-md); }
+
+.btn { padding: 12px 26px; border-radius: 8px; border: 2px solid rgba(80,50,20,0.12); font-size: 1.05rem; font-weight: 700; cursor: pointer; background: linear-gradient(180deg, #f6e9c7, #eddca3); color: var(--color-text-dark); box-shadow: inset 0 -2px 0 rgba(0,0,0,0.06); }
+.btn-block { width: 100%; display:inline-flex; justify-content:center; }
+/* button color variants */
+.btn-primary { background: linear-gradient(180deg, #b0893a, #a1742f); border-color: rgba(120,80,30,0.4); color: #fff; }
+.btn-secondary { background: linear-gradient(180deg, #7b2e2e, #5b1f1f); color: #fff; border-color: rgba(90,40,40,0.28); }
+.btn-outline { background: linear-gradient(180deg, rgba(95,140,80,0.12), rgba(80,120,70,0.06)); color: var(--color-text-dark); border: 2px solid rgba(60,90,50,0.12); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(30,20,10,0.12); }
+.btn-primary:hover, .btn-secondary:hover, .btn-outline:hover { filter: brightness(1.03); }
+
+.footer { margin-top: var(--space-lg); }
+.footer-bottom { text-align:center; color:var(--color-text-light); padding: 12px 0; font-style: italic; }
+
+@media (max-width: 768px) { .container { padding: 18px; } .game-modes { grid-template-columns: 1fr; } }
+
+/* small ornamental flourish for titles */
+.section-title:before, .section-title:after { content: '✦'; margin: 0 8px; color: var(--color-accent); font-size: 0.9rem; }
+
+/* Navigation actions (bottom buttons) */
+.navigation-actions { display:flex; gap:14px; justify-content:center; margin-top:18px; }
+.navigation-actions .btn { min-width: 160px; padding: 10px 18px; }
+.navigation-actions .btn-outline { background: transparent; border-color: rgba(80,50,20,0.08); }
+@media (max-width: 600px) { .navigation-actions { flex-direction: column; gap:10px; } .navigation-actions .btn { width:100%; } }
+
+/* Remove underlines globally and make link-buttons boxed */
+a, a:link, a:visited { text-decoration: none; color: inherit; }
+a:hover, a:focus { text-decoration: none; color: var(--color-accent); }
+.btn-outline { background: linear-gradient(180deg, rgba(245,235,205,0.6), rgba(240,228,190,0.6)); border-color: rgba(120,80,30,0.12); }
+
+/* Ensure button text color does not change on hover */
+.btn, .btn * { color: inherit; }
+.btn:hover, .btn:focus { color: inherit !important; text-decoration: none; }
+

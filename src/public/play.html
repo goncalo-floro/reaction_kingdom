@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reaction Kingdom - Jogar</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="play.css">
     <style>
         /* CAIXA DE CONTROLES */
         .controls-title {
@@ -230,9 +230,8 @@
                         </div>
                         <div class="mode-description">
                             <p>Jogo a dois no mesmo computador.</p>
-                            <br>
                             <ul class="mode-features">
-                                <li>2 jogadores no mesmo teclado</li>
+                                <li>2 jogadores num teclado</li>
                                 <li>Controles separados</li>
                                 <li>Modo competitivo local</li>
                                 <li>Sem necessidade de internet</li>
@@ -373,15 +372,9 @@
         </footer>
     </div>
     
-    <!-- Carregar header automaticamente -->
+    <!-- Header será carregado por app.js -->
+
     <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-            })
-            .catch(error => console.error('Erro ao carregar header:', error));
-            
         // Funções do jogo
         function startGame(mode) {
             let modeName = '';
@@ -393,15 +386,17 @@
                     modeName = 'Split Screen';
                     break;
             }
-            document.getElementById('gameStatus').textContent = `Iniciando ${modeName}...`;
+            const gs = document.getElementById('gameStatus');
+            if (gs) gs.textContent = `Iniciando ${modeName}...`;
             alert(`Modo ${modeName} iniciado!`);
         }
-        
+
         function notifyComingSoon() {
             alert('Multiplayer Online estará disponível em breve!');
         }
     </script>
-    
+
     <script src="app.js"></script>
+    <script src="music.js"></script>
 </body>
 </html>

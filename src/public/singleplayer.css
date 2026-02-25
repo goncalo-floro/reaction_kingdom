@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+.root{},:root{ --color-accent:#b0893a; --color-bg-main:#f7f0d9; --color-bg-secondary:#efe6cc; --color-text-dark:#2b1b0e; --base-font-size:20px; }
+html,body{height:100%;margin:0;font-family:'Cinzel', Georgia, serif;background:radial-gradient(ellipse at center,#f7f0d9 0%,#efe6cc 60%),#f7f0d9;color:var(--color-text-dark);font-size:var(--base-font-size);line-height:1.6}
+.game-header{background:linear-gradient(180deg,rgba(255,255,255,0.6),#fff2d6);padding:20px 30px;border-radius:20px;margin-bottom:30px;border:1px solid rgba(80,50,20,0.08)}
+.game-title h1{background:none;color:var(--color-accent);-webkit-background-clip:unset;font-size:2.8rem;font-weight:700}
+.character-name, .answer-text, .answer-key, .stat-value, .stat-label { font-weight:600 }
+.character-name { font-size:1.4rem }
+.answer-text { font-size:1.25rem }
+
+/* Back button more visible */
+.back-btn { position: fixed; top: 18px; left: 18px; background: linear-gradient(135deg,#b0893a,#8f6b2a); color: #fff; padding: 12px 20px; border-radius: 999px; border: 2px solid rgba(0,0,0,0.25); font-weight:700; font-size:1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.35); z-index:1100 }
+.back-btn:hover { transform: translateX(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.45) }
+.stat-box{background:rgba(0,0,0,0.02);padding:12px;border-radius:12px;border:1px solid rgba(80,50,20,0.04)}
+.character-slot{background:linear-gradient(180deg,#fffaf0,#fbf0d6);border-radius:20px;padding:30px;border:2px solid rgba(80,50,20,0.06)}
+.answer-btn{background:linear-gradient(180deg,#f6e9c7,#eddca3);border:2px solid rgba(80,50,20,0.08);color:var(--color-text-dark);}
+.cooldown-overlay{background:rgba(43,27,14,0.7)}
+.btn{padding:10px 18px;border-radius:12px;background:linear-gradient(180deg,#f7e6b8,#f0d58a);border:2px solid rgba(80,50,20,0.12);color:var(--color-text-dark);font-weight:700}
+
+/* Ensure button text color does not change on hover */
+.btn, .btn * { color: inherit; }
+.btn:hover, .btn:focus { color: inherit !important; text-decoration: none; }

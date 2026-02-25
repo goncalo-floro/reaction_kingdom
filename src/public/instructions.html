@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reaction Kingdom - Instruções</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="instructions.css">
     <style>
         /* Estilos para a barra de personagens */        
         .characters-bar h3 {
@@ -237,7 +237,7 @@
                     <a href="play.html" class="btn btn-primary">
                         Começar a Jogar
                     </a>
-                    <a href="index.html" class="btn btn-outline">
+                    <a href="index.html" class="btn btn-primary">
                         Voltar ao Menu
                     </a>
                 </div>
@@ -251,16 +251,8 @@
         </footer>
     </div>
     
-    <!-- Carregar header automaticamente -->
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-            })
-            .catch(error => console.error('Erro ao carregar header:', error));
-    </script>
-    
+    <!-- Header será carregado por app.js -->
     <script src="app.js"></script>
+    <script src="music.js"></script>
 </body>
 </html>

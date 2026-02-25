@@ -1,8 +1,65 @@
 // Reaction Kingdom - JavaScript Principal
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🏰 Reaction Kingdom Medieval iniciado');
+    console.log('Reaction Kingdom Medieval iniciado');
     initPage();
 });
+
+// Carrega o header de forma robusta, executando scripts inline
+function loadHeader() {
+    const host = document.getElementById('header');
+    if (!host) return Promise.resolve();
+    return fetch('header.html')
+        .then(r => r.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const headerEl = doc.querySelector('header');
+            if (headerEl) host.appendChild(headerEl);
+
+            // Executa scripts do header (inline)
+            const scripts = doc.querySelectorAll('script');
+            scripts.forEach(s => {
+                const newScript = document.createElement('script');
+                if (s.src) {
+                    newScript.src = s.src;
+                } else {
+                    newScript.textContent = s.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        })
+        .catch(err => console.error('Erro ao carregar header:', err));
+}
+
+// Carregar header antes de outras inicializações
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Bust CSS cache by appending a timestamp to stylesheet hrefs
+        bustCssCache();
+        loadHeader().then(() => initPage());
+    });
+} else {
+    bustCssCache();
+    loadHeader().then(() => initPage());
+}
+
+// Força refresh dos ficheiros CSS em desenvolvimento
+function bustCssCache() {
+    try {
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+            // Ignorar se já tem versionamento
+            if (href.includes('?v=')) return;
+            const sep = href.includes('?') ? '&' : '?';
+            const newHref = `${href}${sep}v=${Date.now()}`;
+            link.setAttribute('href', newHref);
+        });
+    } catch (e) {
+        console.error('Erro ao aplicar bustCssCache:', e);
+    }
+}
 
 function initPage() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';

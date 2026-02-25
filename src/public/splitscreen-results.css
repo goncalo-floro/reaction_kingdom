@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:root{
+  --color-accent:#b0893a;
+  --color-bg-main:#f7f0d9;
+  --color-bg-secondary:#efe6cc;
+  --color-text-dark:#2b1b0e;
+  --color-text-medium:#5b4634;
+  --color-text-light:#8b6f52;
+  --border-color:rgba(80,50,20,0.12);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Cinzel', Georgia, serif;background:radial-gradient(ellipse at center,#f7f0d9 0%,#efe6cc 60%),#f7f0d9;color:var(--color-text-dark);display:flex;align-items:center;justify-content:center;padding:20px}
+.container{max-width:1000px;width:100%}
+.results-header h1{color:var(--color-accent)}
+.winner-trophy{color:#b0893a}
+.player-results{background:linear-gradient(180deg,#fffaf0,#fbf0d6);border-radius:18px;padding:28px;border:2px solid var(--border-color)}
+.player-results:hover{transform:translateY(-6px)}
+.winner-name.first{background:linear-gradient(135deg,rgba(176,137,58,0.18),rgba(176,137,58,0.08));border:3px solid #b0893a;color:#b0893a}
+.btn{padding:10px 16px;border-radius:10px;border:2px solid rgba(80,50,20,0.12);background:linear-gradient(180deg,#f6e9c7,#eddca3);color:var(--color-text-dark);font-weight:700}

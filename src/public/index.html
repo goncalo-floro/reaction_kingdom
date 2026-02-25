@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reaction Kingdom - Menu</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="container">
@@ -13,7 +13,6 @@
         
         <main class="main-content">
             <div class="play-section">
-                <h2 class="section-title">Reaction Kingdom</h2>
                 
                 <!-- 2 CAIXAS IGUAIS ÀS OUTRAS PÁGINAS -->
                 <div class="game-modes">
@@ -53,7 +52,7 @@
                             </ul>
                         </div>
                         <div class="mode-actions">
-                            <a href="instructions.html" class="btn btn-secondary btn-block">
+                            <a href="instructions.html" class="btn btn-primary btn-block">
                                 Ver Instruções
                             </a>
                         </div>
@@ -69,16 +68,8 @@
         </footer>
     </div>
     
-    <!-- Carregar header automaticamente -->
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-            })
-            .catch(error => console.error('Erro ao carregar header:', error));
-    </script>
-    
+    <!-- Header será carregado por app.js -->
     <script src="app.js"></script>
+    <script src="music.js"></script>
 </body>
 </html>
