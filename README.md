@@ -1,4 +1,4 @@
-# Reaction Kingdom
+# Reaction Kingdom - jogo já disponível em https://reaction-kingdom.netlify.app/[https://reaction-kingdom.netlify.app/]
 
 É um jogo de reflexos e raciocínio rápido.  
 O objetivo é responder corretamente a cada ronda no menor tempo possível.
