@@ -13,14 +13,16 @@ O objetivo é responder corretamente a cada ronda no menor tempo possível.
 
 1. **Clonar o repositório**
    ```bash
-   git clone https://github.com/teu-utilizador/reaction_kingdom.git
+   git clone https://github.com/goncalo-floro/reaction_kingdom.git
    cd reaction_kingdom
 
 2. **Iniciar o servidor**
+    ```bash
     docker-compose up -d
 
 3. **Aceder ao jogo**
     Abre o browser em http://localhost:5500
 
-4. **Parar o servidor**
+4. **Para parar o servidor**
+    ```bash
     docker-compose down
