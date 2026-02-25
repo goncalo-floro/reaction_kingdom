@@ -21,7 +21,7 @@ O objetivo é responder corretamente a cada ronda no menor tempo possível.
     docker-compose up -d
 
 3. **Aceder ao jogo**
-    Abre o browser em http://localhost:5500
+    - Abre o browser em http://localhost:5500
 
 4. **Para parar o servidor**
     ```bash
