@@ -8,7 +8,7 @@ Jogo já está disponível em https://reaction-kingdom.netlify.app
 ### Modos de Jogo
 
 - **Single Player** – 10 rondas.
-- **Split Screen** – Dois jogadores no mesmo computador, cada um com os seus controles, também 10 rondas.
+- **Split Screen** – Dois jogadores no mesmo computador, cada um com os seus controles.
 
 ## Como correr
 
@@ -17,13 +17,13 @@ Jogo já está disponível em https://reaction-kingdom.netlify.app
    git clone https://github.com/goncalo-floro/reaction_kingdom.git
    cd reaction_kingdom
 
-2. **Iniciar o docker**
+2. **Iniciar o servidor**
     ```bash
     docker-compose up -d
 
 3. **Aceder ao jogo**
     - Abre o browser em http://localhost:5500
 
-4. **Para parar o docker**
+4. **Para parar o servidor**
     ```bash
     docker-compose down
